@@ -1,0 +1,2014 @@
+<style>
+  :root {
+    --bg-primary: #0a0e17;
+    --bg-secondary: #111827;
+    --bg-card: #1a2035;
+    --bg-card-hover: #1e2a45;
+    --accent-blue: #3b82f6;
+    --accent-cyan: #06b6d4;
+    --accent-teal: #14b8a6;
+    --accent-green: #22c55e;
+    --accent-amber: #f59e0b;
+    --accent-red: #ef4444;
+    --accent-orange: #f97316;
+    --text-primary: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --border: #1e293b;
+    --border-light: #334155;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: var(--bg-primary); }
+  ::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 4px; }
+
+  /* Top Bar */
+  .top-bar {
+    background: linear-gradient(180deg, #0f1525 0%, var(--bg-primary) 100%);
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; z-index: 100;
+  }
+  .top-bar-inner {
+    max-width: 1400px; margin: 0 auto; padding: 0 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 60px;
+  }
+  .logo { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+  .logo-icon {
+    width: 36px; height: 36px; background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+    border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 16px; color: #fff;
+  }
+  .logo-text { font-weight: 800; font-size: 18px; letter-spacing: -0.5px; }
+  .logo-text span { color: var(--accent-cyan); }
+  .logo-tagline { font-size: 10px; color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase; }
+
+  /* Sport Selector */
+  .sport-selector {
+    display: flex; gap: 4px; background: var(--bg-card); border-radius: 10px; padding: 3px;
+  }
+  .sport-btn {
+    padding: 6px 14px; border-radius: 8px; border: none; cursor: pointer;
+    font-size: 13px; font-weight: 600; background: transparent;
+    color: var(--text-muted); transition: all 0.2s;
+  }
+  .sport-btn:hover { color: var(--text-secondary); }
+  .sport-btn.active {
+    background: var(--accent-blue); color: #fff;
+    box-shadow: 0 2px 8px rgba(59,130,246,0.4);
+  }
+  .sport-btn .coming-soon {
+    font-size: 8px; background: var(--bg-primary); color: var(--text-muted);
+    padding: 1px 4px; border-radius: 3px; margin-left: 4px; vertical-align: middle;
+  }
+
+  /* Main Nav */
+  .main-nav {
+    background: var(--bg-secondary); border-bottom: 1px solid var(--border);
+  }
+  .main-nav-inner {
+    max-width: 1400px; margin: 0 auto; padding: 0 24px;
+    display: flex; align-items: center; gap: 0; overflow-x: auto;
+  }
+  .nav-link {
+    padding: 12px 18px; font-size: 13px; font-weight: 600;
+    color: var(--text-muted); text-decoration: none; white-space: nowrap;
+    border-bottom: 2px solid transparent; transition: all 0.2s;
+    cursor: pointer; display: flex; align-items: center; gap: 6px;
+  }
+  .nav-link:hover { color: var(--text-primary); }
+  .nav-link.active { color: var(--accent-cyan); border-bottom-color: var(--accent-cyan); }
+  .nav-link .tm { font-size: 9px; color: var(--accent-cyan); font-weight: 700; }
+
+  /* Disclaimer Banner */
+  .disclaimer-banner {
+    background: rgba(59,130,246,0.08); border-bottom: 1px solid rgba(59,130,246,0.2);
+    text-align: center; padding: 8px 24px; font-size: 11px;
+    color: var(--accent-blue); letter-spacing: 0.5px;
+  }
+  .disclaimer-banner strong { color: var(--text-primary); }
+
+  /* Container */
+  .container { max-width: 1400px; margin: 0 auto; padding: 24px; }
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* Section Headers */
+  .section-header { margin-bottom: 28px; }
+  .section-title { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; }
+  .section-subtitle { color: var(--text-muted); font-size: 14px; margin-top: 6px; }
+
+  /* Cards */
+  .card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 20px; transition: all 0.2s;
+  }
+  .card:hover { border-color: var(--border-light); background: var(--bg-card-hover); }
+
+  /* Dashboard Grid */
+  .dash-grid {
+    display: grid; grid-template-columns: 2fr 1fr; gap: 20px;
+  }
+  .dash-grid-full { grid-column: 1 / -1; }
+
+  /* Game Cards */
+  .game-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .game-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 14px; padding: 20px; cursor: pointer; transition: all 0.25s; position: relative; overflow: hidden;
+  }
+  .game-card:hover { border-color: var(--accent-blue); transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
+  .game-card-badge {
+    position: absolute; top: 12px; right: 12px; padding: 3px 10px;
+    border-radius: 6px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .badge-high { background: rgba(34,197,94,0.15); color: var(--accent-green); }
+  .badge-medium { background: rgba(245,158,11,0.15); color: var(--accent-amber); }
+  .badge-low { background: rgba(239,68,68,0.15); color: var(--accent-red); }
+  .badge-upset { background: rgba(249,115,22,0.15); color: var(--accent-orange); }
+  .badge-locked { background: rgba(59,130,246,0.15); color: var(--accent-blue); }
+  .badge-weather { background: rgba(6,182,212,0.15); color: var(--accent-cyan); }
+  .badge-changed { background: rgba(168,85,247,0.15); color: #a855f7; }
+  .badge-completed { background: rgba(148,163,184,0.15); color: var(--text-secondary); }
+  .badge-voting { background: rgba(20,184,166,0.15); color: var(--accent-teal); }
+
+  .game-date { font-size: 11px; color: var(--text-muted); margin-bottom: 12px; font-weight: 500; }
+  .game-venue { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+
+  .game-matchup { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 8px 0; }
+  .game-team { text-align: center; flex: 1; }
+  .team-logo {
+    width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 14px; margin: 0 auto 6px; border: 2px solid transparent;
+  }
+  .team-name { font-size: 13px; font-weight: 700; line-height: 1.2; }
+  .team-record { font-size: 10px; color: var(--text-muted); }
+
+  .game-score-divider {
+    text-align: center; font-size: 18px; font-weight: 800; color: var(--text-secondary);
+    padding: 0 8px;
+  }
+  .predicted-score { font-size: 20px; font-weight: 800; }
+
+  .game-prediction { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); }
+  .pred-winner { font-size: 13px; margin-bottom: 8px; }
+  .pred-winner strong { color: var(--accent-green); }
+
+  .prob-bar-container { margin-top: 8px; }
+  .prob-bar-label { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-muted); margin-bottom: 4px; }
+  .prob-bar {
+    height: 6px; border-radius: 3px; background: var(--bg-primary); overflow: hidden; display: flex;
+  }
+  .prob-bar-away { background: var(--accent-blue); transition: width 0.3s; }
+  .prob-bar-home { background: var(--accent-cyan); transition: width 0.3s; }
+
+  .game-meta { display: flex; gap: 12px; margin-top: 10px; flex-wrap: wrap; }
+  .game-meta-item { font-size: 11px; color: var(--text-muted); display: flex; align-items: center; gap: 4px; }
+  .game-meta-item svg { width: 12px; height: 12px; }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px;
+    border-radius: 8px; border: none; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s;
+  }
+  .btn-primary { background: var(--accent-blue); color: #fff; }
+  .btn-primary:hover { background: #2563eb; }
+  .btn-outline { background: transparent; border: 1px solid var(--border-light); color: var(--text-secondary); }
+  .btn-outline:hover { border-color: var(--accent-cyan); color: var(--accent-cyan); }
+  .btn-ghost { background: transparent; color: var(--text-muted); }
+  .btn-ghost:hover { color: var(--text-primary); }
+  .btn-sm { padding: 5px 10px; font-size: 11px; }
+
+  /* Week Picker */
+  .week-picker {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 24px;
+  }
+  .week-label { font-size: 18px; font-weight: 700; }
+
+  /* Stat Cards */
+  .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+  .stat-card {
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 16px;
+  }
+  .stat-card-value { font-size: 28px; font-weight: 800; margin-top: 4px; }
+  .stat-card-label { font-size: 12px; color: var(--text-muted); }
+  .stat-card-sublabel { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+
+  /* Pulse Timeline */
+  .pulse-timeline { position: relative; padding-left: 24px; }
+  .pulse-timeline::before {
+    content: ''; position: absolute; left: 8px; top: 0; bottom: 0;
+    width: 2px; background: var(--border);
+  }
+  .pulse-entry { position: relative; margin-bottom: 24px; }
+  .pulse-entry::before {
+    content: ''; position: absolute; left: -20px; top: 6px;
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--accent-blue); border: 2px solid var(--bg-primary);
+  }
+  .pulse-entry:first-child::before { background: var(--accent-cyan); }
+  .pulse-date { font-size: 12px; color: var(--text-muted); margin-bottom: 6px; }
+  .pulse-content {
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 16px;
+  }
+  .pulse-change { display: flex; align-items: center; gap: 16px; margin: 8px 0; }
+  .pulse-value { font-size: 18px; font-weight: 700; }
+  .pulse-arrow { color: var(--accent-red); font-size: 18px; }
+  .pulse-diff { font-size: 12px; padding: 2px 8px; border-radius: 4px; }
+  .pulse-down { background: rgba(239,68,68,0.15); color: var(--accent-red); }
+  .pulse-reason { font-size: 13px; color: var(--text-secondary); margin-top: 8px; padding-left: 16px;
+    border-left: 2px solid var(--border-light); }
+
+  /* Coach's Corner */
+  .coach-card {
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 20px;
+    margin-bottom: 16px;
+  }
+  .coach-evidence { margin: 12px 0; }
+  .coach-evidence-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+  .evidence { border-left: 3px solid var(--accent-cyan); padding-left: 12px; margin-bottom: 8px; }
+  .evidence.interpretation { border-color: var(--accent-blue); }
+  .evidence.adjustment { border-color: var(--accent-green); }
+  .evidence p { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+
+  /* Fan Voting */
+  .vote-card {
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 16px;
+  }
+  .vote-question { font-size: 15px; font-weight: 700; margin-bottom: 16px; }
+  .vote-option {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 16px; margin-bottom: 8px; border-radius: 8px;
+    background: var(--bg-primary); cursor: pointer; transition: all 0.2s;
+    border: 1px solid transparent;
+  }
+  .vote-option:hover { border-color: var(--border-light); }
+  .vote-option.selected { border-color: var(--accent-cyan); background: rgba(6,182,212,0.08); }
+  .vote-option-text { font-size: 14px; font-weight: 600; }
+  .vote-option-pct { font-size: 14px; font-weight: 700; color: var(--accent-cyan); }
+  .vote-option-bar {
+    height: 3px; background: var(--border); border-radius: 2px; margin-top: 6px; overflow: hidden;
+  }
+  .vote-option-bar-fill { height: 100%; background: var(--accent-cyan); border-radius: 2px; transition: width 0.4s; }
+  .vote-footer { font-size: 12px; color: var(--text-muted); margin-top: 12px; }
+
+  /* Comparison Table */
+  .comparison-table {
+    width: 100%; border-collapse: collapse; margin-top: 16px;
+  }
+  .comparison-table th {
+    text-align: left; padding: 10px 16px; font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+  }
+  .comparison-table td {
+    padding: 10px 16px; font-size: 13px; border-bottom: 1px solid var(--border);
+  }
+
+  /* Accuracy Center */
+  .accuracy-ring {
+    width: 120px; height: 120px; border-radius: 50%; position: relative;
+    display: flex; align-items: center; justify-content: center; margin: 0 auto;
+  }
+  .accuracy-ring-value { font-size: 32px; font-weight: 800; }
+  .accuracy-ring-label { font-size: 11px; color: var(--text-muted); text-align: center; }
+
+  /* Game Detail */
+  .detail-header {
+    background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-secondary) 100%);
+    border: 1px solid var(--border); border-radius: 16px; padding: 32px; margin-bottom: 24px;
+  }
+  .detail-teams { display: flex; align-items: center; justify-content: center; gap: 40px; }
+  .detail-team { text-align: center; flex: 1; }
+  .detail-team .team-logo { width: 72px; height: 72px; font-size: 22px; }
+  .detail-team .team-name { font-size: 20px; font-weight: 800; }
+  .detail-vs { font-size: 14px; color: var(--text-muted); font-weight: 600; }
+  .detail-pred-score { font-size: 36px; font-weight: 900; }
+
+  .tab-bar { display: flex; gap: 0; border-bottom: 1px solid var(--border); margin-bottom: 20px; overflow-x: auto; }
+  .tab-btn {
+    padding: 10px 18px; font-size: 13px; font-weight: 600; background: none;
+    border: none; color: var(--text-muted); cursor: pointer; white-space: nowrap;
+    border-bottom: 2px solid transparent; transition: all 0.2s;
+  }
+  .tab-btn:hover { color: var(--text-primary); }
+  .tab-btn.active { color: var(--accent-cyan); border-bottom-color: var(--accent-cyan); }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* Modal Overlay */
+  .modal-overlay {
+    display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.75); z-index: 200; overflow-y: auto;
+  }
+  .modal-overlay.active { display: block; }
+  .modal-container {
+    max-width: 1100px; margin: 40px auto; background: var(--bg-primary);
+    border-radius: 16px; border: 1px solid var(--border); overflow: hidden;
+  }
+  .modal-close {
+    position: absolute; top: 16px; right: 16px; background: var(--bg-card); border: 1px solid var(--border);
+    color: var(--text-secondary); width: 36px; height: 36px; border-radius: 8px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; font-size: 18px; z-index: 10;
+  }
+  .modal-close:hover { border-color: var(--accent-blue); }
+
+  /* Architecture diagram */
+  .arch-flow {
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+  }
+  .arch-box {
+    background: var(--bg-card); border: 1px solid var(--border-light); border-radius: 8px;
+    padding: 10px 24px; font-size: 13px; font-weight: 600; text-align: center;
+  }
+  .arch-arrow { font-size: 18px; color: var(--text-muted); }
+
+  /* Multi-model */
+  .model-row {
+    display: flex; gap: 12px; margin-bottom: 8px; align-items: center;
+  }
+  .model-name {
+    width: 180px; font-size: 12px; color: var(--text-muted); font-weight: 600; flex-shrink: 0;
+  }
+  .model-bar-container { flex: 1; height: 28px; background: var(--bg-primary); border-radius: 6px; overflow: hidden; position: relative; }
+  .model-label { position: absolute; top: 50%; transform: translateY(-50%); font-size: 12px; font-weight: 700; }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .game-grid { grid-template-columns: 1fr; }
+    .dash-grid { grid-template-columns: 1fr; }
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .game-grid { grid-template-columns: 1fr; }
+    .stat-grid { grid-template-columns: 1fr; }
+    .top-bar-inner { flex-wrap: wrap; height: auto; padding: 12px 16px; gap: 8px; }
+    .container { padding: 16px; }
+  }
+
+  .fade-in { animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  .glow-blue { box-shadow: 0 0 20px rgba(59,130,246,0.15); }
+  .text-green { color: var(--accent-green); }
+  .text-red { color: var(--accent-red); }
+  .text-amber { color: var(--accent-amber); }
+  .text-cyan { color: var(--accent-cyan); }
+  .text-blue { color: var(--accent-blue); }
+  .text-orange { color: var(--accent-orange); }
+  .text-purple { color: #a855f7; }
+  .text-muted { color: var(--text-muted); }
+  .text-secondary { color: var(--text-secondary); }
+  .mt-1 { margin-top: 4px; }
+  .mt-2 { margin-top: 8px; }
+  .mt-3 { margin-top: 12px; }
+  .mt-4 { margin-top: 16px; }
+  .mb-1 { margin-bottom: 4px; }
+  .mb-2 { margin-bottom: 8px; }
+  .mb-3 { margin-bottom: 12px; }
+  .mb-4 { margin-bottom: 16px; }
+  .flex { display: flex; }
+  .items-center { align-items: center; }
+  .justify-between { justify-content: space-between; }
+  .gap-2 { gap: 8px; }
+  .gap-3 { gap: 12px; }
+  .gap-4 { gap: 16px; }
+  .flex-wrap { flex-wrap: wrap; }
+</style>
+</head>
+<body>
+
+<!-- Top Bar -->
+<div class="top-bar">
+  <div class="top-bar-inner">
+    <div class="logo" onclick="showSection('home')">
+      <div class="logo-icon">GF</div>
+      <div>
+        <div class="logo-text">Game<span>Forecast</span> AI™</div>
+        <div class="logo-tagline">Predict. Analyze. Understand the Game.</div>
+      </div>
+    </div>
+    <div class="sport-selector">
+      <button class="sport-btn active" onclick="selectSport(this,'nfl')">NFL</button>
+      <button class="sport-btn" onclick="selectSport(this,'nba')">NBA <span class="coming-soon">SOON</span></button>
+      <button class="sport-btn" onclick="selectSport(this,'mlb')">MLB <span class="coming-soon">SOON</span></button>
+      <button class="sport-btn" onclick="selectSport(this,'nhl')">NHL <span class="coming-soon">SOON</span></button>
+      <button class="sport-btn" onclick="selectSport(this,'soccer')">SOCCER <span class="coming-soon">SOON</span></button>
+    </div>
+    <div style="font-size:11px; color:var(--text-muted);">Demo Prototype — Not Live Data</div>
+  </div>
+</div>
+
+<!-- Main Nav -->
+<div class="main-nav">
+  <div class="main-nav-inner">
+    <div class="nav-link active" onclick="showSection('home')">🏠 Home</div>
+    <div class="nav-link" onclick="showSection('predictions')">🎯 Prediction Center<span class="tm">™</span></div>
+    <div class="nav-link" onclick="showSection('pulse')">📊 Prediction Pulse<span class="tm">™</span></div>
+    <div class="nav-link" onclick="showSection('coach')">🧠 Coach's Corner<span class="tm">™</span></div>
+    <div class="nav-link" onclick="showSection('fan')">🏟️ Fan Observation Room<span class="tm">™</span></div>
+    <div class="nav-link" onclick="showSection('accuracy')">📈 Accuracy Center<span class="tm">™</span></div>
+    <div class="nav-link" onclick="showSection('about')">ℹ️ About & Disclaimer</div>
+  </div>
+</div>
+
+<!-- Disclaimer -->
+<div class="disclaimer-banner">
+  <strong>AI Sports Forecasting — Not Gambling Advice</strong> &nbsp;|&nbsp; Predictions are probabilistic and may be incorrect. No outcome is guaranteed.
+</div>
+
+<!-- HOME DASHBOARD -->
+<div class="container">
+  <div class="section active" id="section-home">
+    <div class="section-header">
+      <div class="section-title">NFL Week 2 Dashboard</div>
+      <div class="section-subtitle">2026 Season — September 13–15, 2026 &nbsp;|&nbsp; AI Sports Forecasting — Not Gambling Advice</div>
+    </div>
+
+    <!-- Today's Games Quick Strip -->
+    <div style="margin-bottom:24px;">
+      <div style="font-size:14px;font-weight:700;margin-bottom:12px;">⚽ Today's Games — Sunday, September 14</div>
+      <div style="display:flex;gap:12px;overflow-x:auto;padding-bottom:8px;">
+        <div class="card" style="min-width:160px;cursor:pointer;padding:14px;text-align:center;" onclick="showGameDetail(0)">
+          <div style="font-size:11px;color:var(--text-muted);">1:00 PM ET</div>
+          <div style="font-weight:700;font-size:13px;margin-top:6px;">BUF @ HOU</div>
+          <div style="font-size:11px;color:var(--accent-green);margin-top:4px;">Bills 61%</div>
+        </div>
+        <div class="card" style="min-width:160px;cursor:pointer;padding:14px;text-align:center;" onclick="showGameDetail(3)">
+          <div style="font-size:11px;color:var(--text-muted);">1:00 PM ET</div>
+          <div style="font-weight:700;font-size:13px;margin-top:6px;">PHI @ DAL</div>
+          <div style="font-size:11px;color:var(--accent-green);margin-top:4px;">Eagles 68%</div>
+        </div>
+        <div class="card" style="min-width:160px;cursor:pointer;padding:14px;text-align:center;" onclick="showGameDetail(5)">
+          <div style="font-size:11px;color:var(--text-muted);">1:00 PM ET</div>
+          <div style="font-weight:700;font-size:13px;margin-top:6px;">MIA @ CLE</div>
+          <div style="font-size:11px;color:var(--accent-amber);margin-top:4px;">Browns 53%</div>
+        </div>
+        <div class="card" style="min-width:160px;cursor:pointer;padding:14px;text-align:center;border-color:var(--accent-orange);" onclick="showGameDetail(1)">
+          <div style="font-size:11px;color:var(--text-muted);">1:00 PM ET</div>
+          <div style="font-weight:700;font-size:13px;margin-top:6px;">KC @ CAR</div>
+          <div style="font-size:11px;color:var(--accent-orange);margin-top:4px;">⚠️ Upset Watch</div>
+        </div>
+        <div class="card" style="min-width:160px;cursor:pointer;padding:14px;text-align:center;border-color:var(--accent-blue);" onclick="showGameDetail(14)">
+          <div style="font-size:11px;color:var(--text-muted);">8:20 PM ET</div>
+          <div style="font-weight:700;font-size:13px;margin-top:6px;">IND @ PIT</div>
+          <div style="font-size:11px;color:var(--accent-blue);margin-top:4px;">🔒 Forecast Locked</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats Row -->
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-card-label">Week 2 Forecasts</div>
+        <div class="stat-card-value text-cyan">16</div>
+        <div class="stat-card-sublabel">Games this week</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-label">Top Prediction</div>
+        <div class="stat-card-value text-green">89%</div>
+        <div class="stat-card-sublabel">BAL over CIN — High Confidence</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-label">Upset Watch</div>
+        <div class="stat-card-value text-orange">2</div>
+        <div class="stat-card-sublabel">Games with moderate upset risk</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-label">Season Accuracy</div>
+        <div class="stat-card-value text-cyan">66.3%</div>
+        <div class="stat-card-sublabel">Winners — 106 of 160 games</div>
+      </div>
+    </div>
+
+    <div class="dash-grid">
+      <div>
+        <!-- Top Forecasts -->
+        <div style="font-size:16px;font-weight:700;margin-bottom:14px;">🎯 Highest-Confidence Forecasts</div>
+        <div style="display:grid;gap:12px;margin-bottom:28px;">
+          <div class="card" style="cursor:pointer;" onclick="showGameDetail(8)">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <div>
+                <div style="font-weight:700;">Baltimore Ravens @ Cincinnati Bengals</div>
+                <div style="font-size:13px;color:var(--text-secondary);margin-top:4px;">Ravens 31 – Bengals 17</div>
+              </div>
+              <div style="text-align:right;">
+                <div class="badge-high game-card-badge" style="position:static;">HIGH CONFIDENCE</div>
+                <div style="font-size:20px;font-weight:800;margin-top:4px;color:var(--accent-green);">89%</div>
+              </div>
+            </div>
+          </div>
+          <div class="card" style="cursor:pointer;" onclick="showGameDetail(3)">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <div>
+                <div style="font-weight:700;">Philadelphia Eagles @ Dallas Cowboys</div>
+                <div style="font-size:13px;color:var(--text-secondary);margin-top:4px;">Eagles 30 – Cowboys 21</div>
+              </div>
+              <div style="text-align:right;">
+                <div class="badge-high game-card-badge" style="position:static;">HIGH CONFIDENCE</div>
+                <div style="font-size:20px;font-weight:800;margin-top:4px;color:var(--accent-green);">68%</div>
+              </div>
+            </div>
+          </div>
+          <div class="card" style="cursor:pointer;" onclick="showGameDetail(4)">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <div>
+                <div style="font-weight:700;">Detroit Lions @ Seattle Seahawks</div>
+                <div style="font-size:13px;color:var(--text-secondary);margin-top:4px;">Lions 27 – Seahawks 20</div>
+              </div>
+              <div style="text-align:right;">
+                <div class="badge-medium game-card-badge" style="position:static;">MEDIUM</div>
+                <div style="font-size:20px;font-weight:800;margin-top:4px;color:var(--accent-amber);">62%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Upset Watch -->
+        <div style="font-size:16px;font-weight:700;margin-bottom:14px;">⚠️ Upset Watch</div>
+        <div style="display:grid;gap:12px;margin-bottom:28px;">
+          <div class="card" style="cursor:pointer;border-color:rgba(249,115,22,0.3);" onclick="showGameDetail(1)">
+            <div style="display:flex;gap:12px;align-items:center;">
+              <div style="font-size:24px;">⚠️</div>
+              <div style="flex:1;">
+                <div style="font-weight:700;">Kansas City Chiefs @ Carolina Panthers</div>
+                <div style="font-size:12px;color:var(--accent-orange);margin-top:2px;">Upset Risk: Moderate — Carolina's defensive improvements offset home-road gap</div>
+              </div>
+              <div style="font-size:18px;font-weight:800;color:var(--accent-amber);">58%</div>
+            </div>
+          </div>
+          <div class="card" style="cursor:pointer;border-color:rgba(249,115,22,0.3);" onclick="showGameDetail(2)">
+            <div style="display:flex;gap:12px;align-items:center;">
+              <div style="font-size:24px;">🌩️</div>
+              <div style="flex:1;">
+                <div style="font-weight:700;">San Francisco 49ers @ Minnesota Vikings</div>
+                <div style="font-size:12px;color:var(--accent-orange);margin-top:2px;">Upset Risk: Elevated — Weather: 22 mph wind forecast may disrupt passing game</div>
+              </div>
+              <div style="font-size:18px;font-weight:800;color:var(--accent-amber);">55%</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Prediction Changes -->
+        <div style="font-size:16px;font-weight:700;margin-bottom:14px;">📊 Forecast Changes (Last 24h)</div>
+        <div style="display:grid;gap:12px;margin-bottom:28px;">
+          <div class="card" style="cursor:pointer;border-color:rgba(168,85,247,0.3);" onclick="showGameDetail(0)">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <div>
+                <div style="font-weight:700;">Bills @ Texans <span class="badge-changed game-card-badge" style="position:static;font-size:9px;">CHANGED</span></div>
+                <div style="font-size:12px;color:var(--text-secondary);margin-top:4px;">Bills win probability: <span style="color:var(--accent-red);">65% → 61%</span></div>
+              </div>
+              <div style="text-align:right;font-size:12px;color:var(--text-muted);">3 factors changed</div>
+            </div>
+          </div>
+          <div class="card" style="cursor:pointer;border-color:rgba(168,85,247,0.3);" onclick="showGameDetail(2)">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <div>
+                <div style="font-weight:700;">49ers @ Vikings <span class="badge-weather game-card-badge" style="position:static;font-size:9px;">WEATHER</span></div>
+                <div style="font-size:12px;color:var(--text-secondary);margin-top:4px;">49ers win probability: <span style="color:var(--accent-red);">64% → 55%</span></div>
+              </div>
+              <div style="text-align:right;font-size:12px;color:var(--text-muted);">Wind impact</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Sidebar -->
+      <div>
+        <!-- Coach's Corner Featured -->
+        <div style="font-size:16px;font-weight:700;margin-bottom:14px;">🧠 Coach's Corner™ Featured</div>
+        <div class="card" style="margin-bottom:28px;cursor:pointer;" onclick="showSection('coach')">
+          <div style="font-size:12px;color:var(--accent-cyan);font-weight:700;margin-bottom:8px;">NFL — SITUATIONAL ANALYSIS</div>
+          <div style="font-size:14px;font-weight:700;margin-bottom:6px;">Opposing Edge Defender Struggles</div>
+          <div style="font-size:12px;color:var(--text-secondary);line-height:1.5;">Houston's edge defenders have allowed above-average rushing efficiency against outside-zone runs. Consider increasing outside-zone concepts on early downs.</div>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:8px;">Confidence: <span class="text-amber">Medium</span></div>
+        </div>
+
+        <!-- Fan Observation Room Featured -->
+        <div style="font-size:16px;font-weight:700;margin-bottom:14px;">🏟️ Active Fan Votes</div>
+        <div class="card" style="margin-bottom:28px;cursor:pointer;" onclick="showSection('fan')">
+          <div style="font-size:12px;color:var(--accent-teal);font-weight:700;margin-bottom:8px;">LIVE VOTING</div>
+          <div style="font-size:14px;font-weight:700;margin-bottom:6px;">Bills @ Texans — 4th & 2</div>
+          <div style="font-size:12px;color:var(--text-secondary);">What should Buffalo do?</div>
+          <div style="margin-top:8px;">
+            <div style="display:flex;justify-content:space-between;font-size:12px;margin:4px 0;">
+              <span>Go for it</span><span style="color:var(--accent-teal);">64%</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:12px;margin:4px 0;">
+              <span>Punt</span><span style="color:var(--text-muted);">28%</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:12px;margin:4px 0;">
+              <span>Field goal</span><span style="color:var(--text-muted);">8%</span>
+            </div>
+          </div>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:8px;">8,427 fan votes</div>
+        </div>
+
+        <!-- Accuracy Summary -->
+        <div style="font-size:16px;font-weight:700;margin-bottom:14px;">📈 Season Accuracy</div>
+        <div class="card" style="cursor:pointer;" onclick="showSection('accuracy')">
+          <div style="text-align:center;padding:12px 0;">
+            <div style="font-size:48px;font-weight:900;color:var(--accent-cyan);">66.3%</div>
+            <div style="font-size:12px;color:var(--text-muted);">Winner Accuracy — 2026 NFL</div>
+            <div style="font-size:13px;color:var(--text-secondary);margin-top:8px;">High Confidence: <span class="text-green">78%</span></div>
+            <div style="font-size:13px;color:var(--text-secondary);">Avg Score Error: <span class="text-amber">5.8 pts</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PREDICTION CENTER -->
+  <div class="section" id="section-predictions">
+    <div class="section-header">
+      <div class="section-title">Prediction Center™</div>
+      <div class="section-subtitle">NFL Week 2 forecasts — All upcoming games ranked by confidence and probability</div>
+    </div>
+    <div class="week-picker">
+      <button class="btn btn-outline btn-sm" style="margin-right:8px;">← Week 1</button>
+      <div class="week-label">Week 2</div>
+      <button class="btn btn-outline btn-sm" style="margin-left:8px;">Week 3 →</button>
+      <div style="margin-left:auto;font-size:12px;color:var(--text-muted);">16 Games &nbsp;|&nbsp; September 13–15, 2026</div>
+    </div>
+    <div class="game-grid" id="prediction-grid"></div>
+  </div>
+
+  <!-- PREDICTION PULSE -->
+  <div class="section" id="section-pulse">
+    <div class="section-header">
+      <div class="section-title">Prediction Pulse™</div>
+      <div class="section-subtitle">How and why forecasts change — Live forecast movement and factor tracking</div>
+    </div>
+
+    <div id="pulse-content"></div>
+  </div>
+
+  <!-- COACH'S CORNER -->
+  <div class="section" id="section-coach">
+    <div class="section-header">
+      <div class="section-title">Coach's Corner™</div>
+      <div class="section-subtitle">Data-based situational observations and recommendations — NFL insights for Week 2</div>
+    </div>
+    <div style="margin-bottom:20px;">
+      <div class="tab-bar" id="coach-tabs">
+        <button class="tab-btn active" onclick="showCoachTab('overview')">Overview</button>
+        <button class="tab-btn" onclick="showCoachTab('buffalo')">BUF @ HOU</button>
+        <button class="tab-btn" onclick="showCoachTab('kansas')">KC @ CAR</button>
+        <button class="tab-btn" onclick="showCoachTab('sanfran')">SF @ MIN</button>
+        <button class="tab-btn" onclick="showCoachTab('baltimore')">BAL @ CIN</button>
+      </div>
+      <div id="coach-content"></div>
+    </div>
+  </div>
+
+  <!-- FAN OBSERVATION ROOM -->
+  <div class="section" id="section-fan">
+    <div class="section-header">
+      <div class="section-title">Fan Observation Room™</div>
+      <div class="section-subtitle">Structured fan strategy voting — No comments, no chat, just votes</div>
+    </div>
+    <div id="fan-content"></div>
+  </div>
+
+  <!-- ACCURACY CENTER -->
+  <div class="section" id="section-accuracy">
+    <div class="section-header">
+      <div class="section-title">Accuracy Center™</div>
+      <div class="section-subtitle">Public tracking of GameForecast AI™ forecasting performance — Results are final and never retroactively adjusted</div>
+    </div>
+    <div id="accuracy-content"></div>
+  </div>
+
+  <!-- ABOUT -->
+  <div class="section" id="section-about">
+    <div class="section-header">
+      <div class="section-title">About GameForecast AI™</div>
+      <div class="section-subtitle">AI-powered sports forecasting and game intelligence — Not gambling advice</div>
+    </div>
+    <div id="about-content"></div>
+  </div>
+</div>
+
+<!-- Game Detail Modal -->
+<div class="modal-overlay" id="game-modal">
+  <div class="modal-container" style="position:relative;">
+    <button class="modal-close" onclick="closeGameDetail()">✕</button>
+    <div id="modal-body" style="padding:32px;"></div>
+  </div>
+</div>
+
+<script>
+// ======================= DATA =======================
+
+const NFL_TEAMS = {
+  BUF: { name: 'Buffalo Bills', abbr: 'BUF', color: '#00338D', secColor: '#C60C30', record: '1-0' },
+  HOU: { name: 'Houston Texans', abbr: 'HOU', color: '#03202D', secColor: '#C60C30', record: '1-0' },
+  KC:  { name: 'Kansas City Chiefs', abbr: 'KC', color: '#E31837', secColor: '#FFB81C', record: '1-0' },
+  CAR: { name: 'Carolina Panthers', abbr: 'CAR', color: '#0085CA', secColor: '#101820', record: '0-1' },
+  SF:  { name: 'San Francisco 49ers', abbr: 'SF', color: '#AA0000', secColor: '#B3995D', record: '1-0' },
+  MIN: { name: 'Minnesota Vikings', abbr: 'MIN', color: '#4F2683', secColor: '#FFC62F', record: '1-0' },
+  PHI: { name: 'Philadelphia Eagles', abbr: 'PHI', color: '#004C54', secColor: '#A5ACAF', record: '1-0' },
+  DAL: { name: 'Dallas Cowboys', abbr: 'DAL', color: '#003594', secColor: '#041E42', record: '0-1' },
+  DET: { name: 'Detroit Lions', abbr: 'DET', color: '#0076B6', secColor: '#B0B7BC', record: '1-0' },
+  SEA: { name: 'Seattle Seahawks', abbr: 'SEA', color: '#002244', secColor: '#69BE28', record: '1-0' },
+  MIA: { name: 'Miami Dolphins', abbr: 'MIA', color: '#008E97', secColor: '#FC4C02', record: '0-1' },
+  CLE: { name: 'Cleveland Browns', abbr: 'CLE', color: '#311D00', secColor: '#FF3C00', record: '1-0' },
+  GB:  { name: 'Green Bay Packers', abbr: 'GB', color: '#203731', secColor: '#FFB612', record: '1-0' },
+  ATL: { name: 'Atlanta Falcons', abbr: 'ATL', color: '#A71930', secColor: '#A5ACAF', record: '0-1' },
+  BAL: { name: 'Baltimore Ravens', abbr: 'BAL', color: '#241773', secColor: '#9E7C0C', record: '1-0' },
+  CIN: { name: 'Cincinnati Bengals', abbr: 'CIN', color: '#FB4F14', secColor: '#000000', record: '0-1' },
+  NYJ: { name: 'New York Jets', abbr: 'NYJ', color: '#125740', secColor: '#FFFFFF', record: '0-1' },
+  NE:  { name: 'New England Patriots', abbr: 'NE', color: '#002244', secColor: '#C60C30', record: '0-1' },
+  LV:  { name: 'Las Vegas Raiders', abbr: 'LV', color: '#A5ACAF', secColor: '#000000', record: '0-1' },
+  LAC: { name: 'Los Angeles Chargers', abbr: 'LAC', color: '#0080C6', secColor: '#FFC20E', record: '0-1' },
+  TB:  { name: 'Tampa Bay Buccaneers', abbr: 'TB', color: '#D50A0A', secColor: '#34302B', record: '1-0' },
+  CHI: { name: 'Chicago Bears', abbr: 'CHI', color: '#0B162A', secColor: '#C4813D', record: '0-1' },
+  DEN: { name: 'Denver Broncos', abbr: 'DEN', color: '#FB4F14', secColor: '#002244', record: '0-1' },
+  WSH: { name: 'Washington Commanders', abbr: 'WSH', color: '#5A1414', secColor: '#FFB612', record: '0-1' },
+  ARI: { name: 'Arizona Cardinals', abbr: 'ARI', color: '#97233F', secColor: '#000000', record: '0-1' },
+  NYG: { name: 'New York Giants', abbr: 'NYG', color: '#0B2265', secColor: '#A71930', record: '0-1' },
+  JAX: { name: 'Jacksonville Jaguars', abbr: 'JAX', color: '#006778', secColor: '#D7A22A', record: '0-1' },
+  TEN: { name: 'Tennessee Titans', abbr: 'TEN', color: '#4B92DB', secColor: '#0C2340', record: '1-0' },
+  IND: { name: 'Indianapolis Colts', abbr: 'IND', color: '#002C5F', secColor: '#A2AAAD', record: '0-1' },
+  PIT: { name: 'Pittsburgh Steelers', abbr: 'PIT', color: '#FFB612', secColor: '#101820', record: '1-0' },
+  LAR: { name: 'Los Angeles Rams', abbr: 'LAR', color: '#003594', secColor: '#FFA300', record: '1-0' },
+  NO:  { name: 'New Orleans Saints', abbr: 'NO', color: '#D3BC8D', secColor: '#101820', record: '0-1' }
+};
+
+const GAMES = [
+  {
+    id: 0, away: 'BUF', home: 'HOU', date: 'Sun, Sep 14', time: '1:00 PM ET', venue: 'NRG Stadium, Houston, TX',
+    predAwayScore: 27, predHomeScore: 24, winner: 'BUF', winProb: 61, confidence: 'medium',
+    upsetRisk: 'Moderate', badge: 'changed', badgeLabel: 'CHANGED',
+    explanation: 'Buffalo has the stronger projected offensive efficiency, but Houston\'s defensive pressure and home-field advantage keep the projected margin within one possession.',
+    factors: ['Offensive efficiency differential favors Buffalo (+12%)', 'Houston home-field advantage worth ~3 points', 'Bills starting receiver listed as questionable', 'Houston cornerback upgraded to active'],
+    pulseHistory: [
+      { date: 'Monday, Sep 8', awayScore: 28, homeScore: 23, winProb: 65, reasons: [] },
+      { date: 'Wednesday, Sep 10', awayScore: 27, homeScore: 24, winProb: 63, reasons: ['Bills WR Gabe Davis limited in practice with knee soreness'] },
+      { date: 'Friday, Sep 12', awayScore: 27, homeScore: 24, winProb: 61, reasons: ['Bills WR Gabe Davis listed as questionable', 'Texans CB Derrick Stingley Jr. upgraded to active', 'Strong wind expected in Houston area Sunday (18 mph gusts)'] }
+    ],
+    coachAnalysis: {
+      title: 'Houston Defensive Edge Struggles vs. Outside Zone',
+      evidence: 'The Texans have allowed above-average rushing efficiency (4.8 YPC) against outside-zone runs through the first two weeks of the season and preseason.',
+      interpretation: 'Houston\'s edge defenders have struggled to maintain contain against stretch plays, creating potential running lanes on the perimeter.',
+      adjustment: 'Consider increasing outside-zone concepts on early downs to leverage the Bills\' athletic offensive line against Houston\'s edge-setting issues.',
+      confidence: 'Medium'
+    },
+    fanVotes: [
+      { question: '4th & 2 at HOU 41 — What should Buffalo do?', options: [
+        { text: 'Go for it', pct: 64 }, { text: 'Punt', pct: 28 }, { text: 'Attempt field goal', pct: 8 }
+      ], total: 8427 },
+      { question: 'Bills offensive possession — Play type?', options: [
+        { text: 'Run', pct: 32 }, { text: 'Short pass', pct: 38 }, { text: 'Deep pass', pct: 18 }, { text: 'Play-action', pct: 12 }
+      ], total: 6311 },
+      { question: 'Texans defensive stance — Coverage?', options: [
+        { text: 'Blitz', pct: 28 }, { text: 'Zone coverage', pct: 47 }, { text: 'Man coverage', pct: 25 }
+      ], total: 5194 }
+    ],
+    weather: null, injury: true, locked: false, completed: false
+  },
+  {
+    id: 1, away: 'KC', home: 'CAR', date: 'Sun, Sep 14', time: '1:00 PM ET', venue: 'Bank of America Stadium, Charlotte, NC',
+    predAwayScore: 24, predHomeScore: 21, winner: 'KC', winProb: 58, confidence: 'medium',
+    upsetRisk: 'Moderate', badge: 'upset', badgeLabel: 'UPSET ALERT',
+    explanation: 'Kansas City holds a slight edge in offensive efficiency, but Carolina\'s offseason defensive improvements and home-field advantage narrow the gap significantly. A competitive game is projected.',
+    factors: ['KC offensive advantage narrow', 'Carolina defense improved over offseason', 'Home-field advantage for Carolina', 'KC coming off short week following Sunday Night Football'],
+    pulseHistory: [
+      { date: 'Monday, Sep 8', awayScore: 25, homeScore: 20, winProb: 62, reasons: [] },
+      { date: 'Thursday, Sep 11', awayScore: 24, homeScore: 21, winProb: 58, reasons: ['KC coming off short rest after Sunday Night game', 'Carolina DE Brian Burns cleared to play'] }
+    ],
+    coachAnalysis: {
+      title: 'Panthers Pass Rush vs. KC Protection',
+      evidence: 'Carolina generated pressure on 34% of dropbacks in Week 1, ranking top-5 in the NFL.',
+      interpretation: 'If the Panthers can pressure Mahomes consistently, it could disrupt timing and force quicker throws, reducing KC\'s explosive play potential.',
+      adjustment: 'KC should consider max-protection sets and quick-game concepts to neutralize the Panthers\' front four rush.',
+      confidence: 'Medium'
+    },
+    fanVotes: [],
+    weather: null, injury: false, locked: false, completed: false
+  },
+  {
+    id: 2, away: 'SF', home: 'MIN', date: 'Sun, Sep 14', time: '1:00 PM ET', venue: 'U.S. Bank Stadium, Minneapolis, MN',
+    predAwayScore: 23, predHomeScore: 21, winner: 'SF', winProb: 55, confidence: 'low',
+    upsetRisk: 'Elevated', badge: 'weather', badgeLabel: 'WEATHER IMPACT',
+    explanation: 'San Francisco\'s slight offensive advantage is offset by Minnesota\'s home-field advantage and significant wind conditions that may reduce passing efficiency for both teams.',
+    factors: ['Projected winds 22 mph at kickoff', 'Wind may reduce deep passing efficiency', 'Field goal range could be limited', 'SF running game advantage narrowed by wind conditions', 'MIN home-field advantage (~2.5 points)'],
+    pulseHistory: [
+      { date: 'Monday, Sep 8', awayScore: 26, homeScore: 20, winProb: 64, reasons: [] },
+      { date: 'Wednesday, Sep 10', awayScore: 24, homeScore: 21, winProb: 59, reasons: ['Initial wind forecasts projected 15 mph, now revised to 22 mph'] },
+      { date: 'Friday, Sep 12', awayScore: 23, homeScore: 21, winProb: 55, reasons: ['Wind forecast confirmed at 22 mph gusting to 30 mph', 'SF WR Brandon Aiyuk limited in practice'] }
+    ],
+    coachAnalysis: {
+      title: 'Wind Impact on Play Selection',
+      evidence: 'Projected winds of 22 mph with gusts to 30 mph are likely to reduce deep passing effectiveness by an estimated 20-30% at U.S. Bank Stadium and may impact field-goal range by 5-8 yards.',
+      interpretation: 'Both teams should expect reduced passing efficiency, particularly on deeper routes. Field-goal range shrinks, altering fourth-down calculus.',
+      adjustment: 'Consider increasing ground-game frequency and short/intermediate passing concepts. Reduce deep shot frequency. On defense, load the box more aggressively in high-wind situations.',
+      confidence: 'High'
+    },
+    fanVotes: [
+      { question: 'With 22 mph wind — Should teams run or pass?', options: [
+        { text: 'Prioritize the run', pct: 71 }, { text: 'Stick with game plan', pct: 29 }
+      ], total: 4215 }
+    ],
+    weather: { wind: '22 mph (Gusts 30 mph)', temp: '54°F', condition: 'Windy with light rain', impact: 'Projected winds of 22 mph may reduce deep passing efficiency and field-goal range. Teams may need to prioritize ground game and short passes.' },
+    injury: false, locked: false, completed: false
+  },
+  {
+    id: 3, away: 'PHI', home: 'DAL', date: 'Sun, Sep 14', time: '4:25 PM ET', venue: 'AT&T Stadium, Arlington, TX',
+    predAwayScore: 30, predHomeScore: 21, winner: 'PHI', winProb: 68, confidence: 'high',
+    upsetRisk: 'Low', badge: 'high', badgeLabel: 'HIGH CONFIDENCE',
+    explanation: 'Philadelphia\'s superior offensive and defensive efficiency, combined with Dallas\'s Week 1 struggles on both sides of the ball, create a clear advantage for the Eagles.',
+    factors: ['PHI offense ranked top-5 in efficiency Week 1', 'DAL defense allowed 400+ yards in opener', 'PHI defensive front generating consistent pressure', 'DAL QB under pressure in 42% of dropbacks last game'],
+    pulseHistory: [
+      { date: 'Monday, Sep 8', awayScore: 29, homeScore: 22, winProb: 66, reasons: [] }
+    ],
+    coachAnalysis: {
+      title: 'Eagles Pass Rush vs. Cowboys Protection',
+      evidence: 'Dallas allowed pressure on 42% of dropbacks in Week 1 and allowed 5 sacks. Philadelphia generated pressure on 38% of defensive snaps.',
+      interpretation: 'The Cowboys\' offensive line may continue to struggle against Philadelphia\'s aggressive front. Quick releases and maximum protection may be necessary.',
+      adjustment: 'Dallas should consider utilizing max-protection packages and quick-release concepts. Philadelphia should continue to pressure from multiple gaps.',
+      confidence: 'High'
+    },
+    fanVotes: [],
+    weather: null, injury: false, locked: false, completed: false
+  },
+  {
+    id: 4, away: 'DET', home: 'SEA', date: 'Sun, Sep 14', time: '4:25 PM ET', venue: 'Lumen Field, Seattle, WA',
+    predAwayScore: 27, predHomeScore: 20, winner: 'DET', winProb: 62, confidence: 'medium',
+    upsetRisk: 'Low', badge: 'medium', badgeLabel: 'MEDIUM',
+    explanation: 'Detroit\'s high-powered offense should be able to exploit Seattle\'s defensive weaknesses, though Lumen Field\'s crowd noise and Seattle\'s home-field advantage are real factors.',
+    factors: ['DET offensive efficiency Week 1 ranked top-5', 'SEA defense allowed 28 points in Week 1', 'Lumen Field home-field advantage (~3 points)', 'DET rushing attack averaging 5.2 YPC'],
+    pulseHistory: [],
+    coachAnalysis: null,
+    fanVotes: [],
+    weather: null, injury: false, locked: false, completed: false
+  },
+  {
+    id: 5, away: 'MIA', home: 'CLE', date: 'Sun, Sep 14', time: '1:00 PM ET', venue: 'Huntington Bank Field, Cleveland, OH',
+    predAwayScore: 22, predHomeScore: 24, winner: 'CLE', winProb: 53, confidence: 'low',
+    upsetRisk: 'Moderate', badge: 'low', badgeLabel: 'LOW CONFIDENCE',
+    explanation: 'A closely projected game where Cleveland\'s home-field advantage and slightly stronger defensive metrics offset Miami\'s offensive explosiveness. Either team could reasonably win.',
+    factors: ['Very close efficiency metrics between teams', 'CLE home-field advantage', 'MIA passing game explosive but inconsistent', 'CLE defensive front strong against the run'],
+    pulseHistory: [],
+    coachAnalysis: null,
+    fanVotes: [],
+    weather: null, injury: false, locked: false, completed: false
+  },
+  {
+    id: 6, away: 'GB', home: 'ATL', date: 'Sun, Sep 14', time: '1:00 PM ET', venue: 'Mercedes-Benz Stadium, Atlanta, GA',
+    predAwayScore: 26, predHomeScore: 20, winner: 'GB', winProb: 64, confidence: 'medium',
+    upsetRisk: 'Low', badge: 'medium', badgeLabel: 'MEDIUM',
+    explanation: 'Green Bay\'s offensive system and quarterback play give them a meaningful edge over an Atlanta team still establishing offensive identity.',
+    factors: ['GB QB efficient in Week 1', 'ATL offense scored only 17 points in opener', 'GB defensive front seven strong', 'ATL home-field advantage partially offsets gap'],
+    pulseHistory: [],
+    coachAnalysis: null,
+    fanVotes: [],
+    weather: null, injury: false, locked: false, completed: false
+  },
+  {
+    id: 7, away: 'BAL', home: 'CIN', date: 'Sun, Sep 14', time: '4:25 PM ET', venue: 'Paycor Stadium, Cincinnati, OH',
+    predAwayScore: 31, predHomeScore: 17, winner: 'BAL', winProb: 89, confidence: 'high',
+    upsetRisk: 'Very Low', badge: 'high', badgeLabel: 'HIGH CONFIDENCE',
+    explanation: 'Baltimore\'s dominant Week 1 performance, combined with Cincinnati\'s significant offensive line issues and defensive vulnerabilities, create the highest-confidence forecast of the week.',
+    factors: ['BAL offense ranked #1 in efficiency Week 1', 'CIN offensive line allowed 6 sacks in Week 1', 'BAL rushing attack produced 200+ yards', 'CIN defense allowed 35 points in opener'],
+    pulseHistory: [],
+    coachAnalysis: null,
+    fanVotes: [],
+    weather: null, injury: false, locked: false, completed: false
+  },
+  {
+    id: 8, away: 'NYJ', home: 'NE', date: 'Sun, Sep 14', time: '1:00 PM ET', venue: 'Gillette Stadium, Foxborough, MA',
+    predAwayScore: 21, predHomeScore: 17, winner: 'NYJ', winProb: 60, confidence: 'medium',
+    upsetRisk: 'Low', badge: 'injury', badgeLabel: 'INJURY WATCH',
+    explanation: 'New York\'s defensive advantages and New England\'s rebuilding status favor the Jets, but theJets\' quarterback injury concerns could tighten this game.',
+    factors: ['NYJ defensive front elite', 'NE offense limited in weapons', 'NYJ QB health status uncertain', 'Division games tend to be closer than average', 'NE coaching can overachieve in division games'],
+    pulseHistory: [],
+    coachAnalysis: null,
+    fanVotes: [],
+    weather: null, injury: true, locked: false, completed: false
+  },
+  {
+    id: 9, away: 'LV', home: 'LAC', date: 'Sun, Sep 14', time: '4:05 PM ET', venue: 'SoFi Stadium, Inglewood, CA',
+    predAwayScore: 20, predHomeScore: 26, winner: 'LAC', winProb: 63, confidence: 'medium',
+    upsetRisk: 'Low', badge: 'medium', badgeLabel: 'MEDIUM',
+    explanation: 'The Chargers\' offensive weapons and home-field advantage give them a meaningful edge over a Las Vegas team that struggled to generate consistent offense in Week 1.',
+    factors: ['LAC QB efficient and healthy', 'LV passing game inconsistent in Week 1', 'LAC home-field advantage in shared stadium', 'LAC defensive additions showing promise'],
+    pulseHistory: [],
+    coachAnalysis: null,
+    fanVotes: [],
+    weather: null, injury: false, locked: false, completed: false
+  },
+  {
+    id: 10, away: 'TB', home: 'CHI', date: 'Sun, Sep 14', time: '1:00 PM ET', venue: 'Soldier Field, Chicago, IL',
+    predAwayScore: 23, homeScore: 19, winner: 'TB', winProb: 59, confidence: 'medium',
+    upseRisk: 'Low', badge: 'medium', badgeLabel: 'MEDIUM',
+    explanation: 'Tampa Bay\'s stronger offensive efficiency and Chicago\'s Week 1 offensive struggles contribute to a slight Buccaneers advantage.',
+    factors: ['TB offense efficient in Week 1', 'CHI scored only 14 points in opener', 'CHI home-field advantage worth ~2.5 points', 'TB passing game effective against soft coverage'],
+    pulseHistory: [],
+    coachAnalysis: null,
+    fanVotes: [],
+    weather: null, injury: false, locked: false, completed: false
+  },
+  {
+    id: 11, away: 'DEN', home: 'WSH', date: 'Sun, Sep 14', time: '1:00 PM ET', venue: 'Commanders Field, Landover, MD',
+    predAwayScore: 18, predHomeScore: 22, winner: 'WSH', winProb: 56, confidence: 'low',
+    upsetRisk: 'Moderate', badge: 'low', badgeLabel: 'LOW CONFIDENCE',
+    explanation: 'A tightly projected game between two rebuilding teams. Washington\'s home-field advantage and slightly better defensive metrics give them a narrow edge.',
+    factors: ['Both teams rebuilding around young QBs', 'WSH home-field advantage', 'DEN defensive front strong', 'WSH running game showed promise in Week 1', 'Low confidence due to small sample sizes on both teams'],
+    pulseHistory: [],
+    coachAnalysis: null,
+    fanVotes: [],
+    weather: null, injury: false, locked: false, completed: false
+  },
+  {
+    id: 12, away: 'ARI', home: 'NYG', date: 'Sun, Sep 14', time: '1:00 PM ET', venue: 'MetLife Stadium, East Rutherford, NJ',
+    predAwayScore: 17, predHomeScore: 24, winner: 'NYG', winProb: 65, confidence: 'medium',
+    upsetRisk: 'Low', badge: 'medium', badgeLabel: 'MEDIUM',
+    explanation: 'New York\'s defensive improvements and Arizona\'s limited offensive weapons favor the Giants at home.',
+    factors: ['NYG defense performed well in Week 1', 'ARI offense lacks explosive playmakers', 'NYG home-field advantage', 'ARI defensive struggles in Week 1'],
+    pulseHistory: [],
+    coachAnalysis: null,
+    fanVotes: [],
+    weather: null, injury: false, locked: false, completed: false
+  },
+  {
+    id: 13, away: 'JAX', home: 'TEN', date: 'Sun, Sep 14', time: '1:00 PM ET', venue: 'Nissan Stadium, Nashville, TN',
+    predAwayScore: 20, predHomeScore: 23, winner: 'TEN', winProb: 57, confidence: 'low',
+    upsetRisk: 'Moderate', badge: 'low', badgeLabel: 'LOW CONFIDENCE',
+    explanation: 'Tennessee\'s strong Week 1 defensive performance and home-field advantage give them a slight edge in a division game that tends to be competitive.',
+    factors: ['TEN defense held opponent to 16 points in Week 1', 'Division game — tends to be closer', 'JAX offensive inconsistency continues', 'TEN home-field advantage'],
+    pulseHistory: [],
+    coachAnalysis: null,
+    fanVotes: [],
+    weather: null, injury: false, locked: false, completed: false
+  },
+  {
+    id: 14, away: 'IND', home: 'PIT', date: 'Sun, Sep 14', time: '8:20 PM ET', venue: 'Acrisure Stadium, Pittsburgh, PA',
+    predAwayScore: 17, predHomeScore: 24, winner: 'PIT', winProb: 72, confidence: 'high',
+    upsetRisk: 'Low', badge: 'locked', badgeLabel: '🔒 FORECAST LOCKED',
+    explanation: 'FORECAST LOCKED — Pittsburgh\'s defensive strength, home-field advantage, and Indianapolis\'s offensive line concerns support a Steelers advantage. Official forecast locked September 13, 2026 at 12:30 PM ET.',
+    factors: ['PIT defense allowed only 13 points in Week 1', 'IND offensive line allowed 5 sacks', 'PIT home-field advantage in prime time', 'PIT defensive front dominant vs. the run'],
+    pulseHistory: [
+      { date: 'Monday, Sep 8', awayScore: 18, homeScore: 24, winProb: 70, reasons: [] },
+      { date: 'Wednesday, Sep 10', awayScore: 17, homeScore: 24, winProb: 71, reasons: ['PIT LB T.J. Watt confirmed healthy for Sunday'] },
+      { date: 'Sep 13 12:30 PM — FORECAST LOCKED', awayScore: 17, homeScore: 24, winProb: 72, reasons: ['Official forecast locked. No further changes will be made to the accuracy record.'] }
+    ],
+    coachAnalysis: {
+      title: 'PIT Blitz Tendencies vs. IND Protection',
+      evidence: 'Pittsburgh blitzed on 38% of defensive snaps in Week 1 (4th highest in NFL). Indianapolis allowed pressure on 44% of dropbacks and surrendered 5 sacks.',
+      interpretation: 'Pittsburgh\'s aggressive blitz packages may overwhelm Indianapolis\'s struggling protection. The Colts may need to heavily utilize quick-release concepts and maximum protection.',
+      adjustment: 'Indianapolis should prioritize ball-out-quick concepts and use chip blocks on T.J. Watt. Pittsburgh should continue to bring pressure from varied looks to keep the Colts\' protection off-balance.',
+      confidence: 'High'
+    },
+    fanVotes: [
+      { question: '3rd & 7 at PIT 34 — Colts possession. What should Indianapolis do?', options: [
+        { text: 'Short pass', pct: 52 }, { text: 'Run', pct: 15 }, { text: 'Deep pass', pct: 18 }, { text: 'Screen pass', pct: 15 }
+      ], total: 3892 }
+    ],
+    weather: null, injury: false, locked: true, lockedDate: 'September 13, 2026 at 12:30 PM ET', completed: false
+  },
+  {
+    id: 15, away: 'LAR', home: 'NO', date: 'Mon, Sep 15', time: '8:15 PM ET', venue: 'Caesars Superdome, New Orleans, LA',
+    predAwayScore: 25, predHomeScore: 20, winner: 'LAR', winProb: 60, confidence: 'medium',
+    upsetRisk: 'Low', badge: 'medium', badgeLabel: 'MEDIUM',
+    explanation: 'Los Angeles\'s defensive strength and offensive efficiency give them a moderate edge, though New Orleans\'s home-field advantage in the Superdome is a meaningful factor.',
+    factors: ['LAR offensive efficiency strong in Week 1', 'NO defense allowed 31 points in opener', 'Superdome home-field advantage for NO', 'LAR defensive front seven playing well', 'Monday Night game — division-like intensity expected'],
+    pulseHistory: [],
+    coachAnalysis: null,
+    fanVotes: [],
+    weather: null, injury: false, locked: false, completed: false, isMonday: true
+  }
+];
+
+// Completed Game Example (would be past week data)
+const COMPLETED_GAME = {
+  id: 100, away: 'GB', home: 'PHI', date: 'Thu, Sep 4', time: '8:20 PM ET', venue: ' Corinthians Arena, São Paulo, Brazil',
+  predAwayScore: 20, predHomeScore: 24, winner: 'PHI', winProb: 63, confidence: 'medium',
+  actualAwayScore: 20, actualHomeScore: 27,
+  predictionCorrect: true, scoreErrorAway: 0, scoreErrorHome: 3,
+  gotRight: ['Correctly identified Philadelphia\'s home-field advantage', 'Correctly anticipated Eagles defensive pressure would be a factor', 'Correctly projected a competitive game'],
+  gotWrong: ['Underestimated Philadelphia\'s second-half offensive explosion', 'Green Bay passing efficiency lower than projected', 'Wind conditions had less impact than expected']
+};
+
+const ACCURACY_DATA = {
+  season: 'NFL 2026',
+  totalGames: 160,
+  correctWinners: 106,
+  winnerAccuracy: 66.3,
+  avgScoreError: 5.8,
+  highConfFores: 48, highConfCorrect: 37, highConfAccuracy: 78,
+  medConfFores: 72, medConfCorrect: 48, medConfAccuracy: 66.7,
+  lowConfFores: 40, lowConfCorrect: 21, lowConfAccuracy: 52.5,
+  upsetCorrect: 8, upsetTotal: 22, upsetAccuracy: 36.4
+};
+
+// ======================= NAVIGATION =======================
+
+function showSection(section) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById('section-' + section).classList.add('active');
+  document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+  const navLabels = { home: '🏠 Home', predictions: '🎯', pulse: '📊', coach: '🧠', fan: '🏟️', accuracy: '📈', about: 'ℹ️' };
+  document.querySelectorAll('.nav-link').forEach(n => {
+    if (n.textContent.includes(navLabels[section] || section)) n.classList.add('active');
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (section === 'predictions') renderPredictions();
+  if (section === 'pulse') renderPulse();
+  if (section === 'fan') renderFan();
+  if (section === 'accuracy') renderAccuracy();
+  if (section === 'about') renderAbout();
+  if (section === 'coach') renderCoach('overview');
+}
+
+function selectSport(btn, sport) {
+  document.querySelectorAll('.sport-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  if (sport !== 'nfl') {
+    alert(sport.toUpperCase() + ' is coming soon! The prototype currently demonstrates NFL only. The architecture supports adding ' + sport.toUpperCase() + ' in the future.');
+  }
+}
+
+// ======================= TEAM LOGOS =======================
+
+function teamLogoHTML(abbr, size) {
+  size = size || 48;
+  const t = NFL_TEAMS[abbr];
+  const fs = size < 40 ? 10 : size < 56 ? 14 : 22;
+  return `<div class="team-logo" style="width:${size}px;height:${size}px;background:${t.color};border-color:${t.secColor};font-size:${fs}px;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,0.5);">${abbr}</div>`;
+}
+
+// ======================= BADGES =======================
+
+function badgeHTML(game) {
+  let cls = 'badge-', text = game.badgeLabel;
+  if (game.badge === 'changed') cls += 'changed';
+  else if (game.badge === 'upset') cls += 'upset';
+  else if (game.badge === 'weather') cls += 'weather';
+  else if (game.badge === 'locked') cls += 'locked';
+  else if (game.badge === 'high') cls += 'high';
+  else if (game.badge === 'medium') cls += 'medium';
+  else if (game.badge === 'low') cls += 'low';
+  else if (game.badge === 'injury') cls += 'low';
+  else if (game.badge === 'completed') cls += 'completed';
+  else if (game.badge === 'voting') cls += 'voting';
+  else cls += 'medium';
+  return `<div class="game-card-badge ${cls}">${text}</div>`;
+}
+
+// ======================= PREDICTION CENTER =======================
+
+function renderPredictions() {
+  const grid = document.getElementById('prediction-grid');
+  grid.innerHTML = GAMES.map(g => {
+    const away = NFL_TEAMS[g.away], home = NFL_TEAMS[g.home];
+    const awayWin = g.winProb, homeWin = 100 - g.winProb;
+    return `
+      <div class="game-card fade-in" onclick="showGameDetail(${g.id})">
+        ${badgeHTML(g)}
+        <div class="game-date">${g.date} &nbsp;|&nbsp; ${g.time}</div>
+        <div class="game-matchup">
+          <div class="game-team">
+            ${teamLogoHTML(g.away, 48)}
+            <div class="team-name">${away.name}</div>
+            <div class="team-record">${away.record}</div>
+          </div>
+          <div class="game-score-divider">
+            <div style="font-size:10px;color:var(--text-muted);margin-bottom:2px;">PRED</div>
+            <div class="predicted-score"><span style="color:${awayWin > homeWin ? 'var(--accent-green)' : 'var(--text-secondary)'}">${g.predAwayScore}</span> – <span style="color:${homeWin > awayWin ? 'var(--accent-green)' : 'var(--text-secondary)'}">${g.predHomeScore}</span></div>
+          </div>
+          <div class="game-team">
+            ${teamLogoHTML(g.home, 48)}
+            <div class="team-name">${home.name}</div>
+            <div class="team-record">${home.record}</div>
+          </div>
+        </div>
+        <div class="game-prediction">
+          <div class="pred-winner">🏆 Predicted Winner: <strong>${NFL_TEAMS[g.winner].name}</strong></div>
+          <div class="prob-bar-container">
+            <div class="prob-bar-label">
+              <span>${away.abbr} ${awayWin}%</span>
+              <span>${home.abbr} ${homeWin}%</span>
+            </div>
+            <div class="prob-bar">
+              <div class="prob-bar-away" style="width:${awayWin}%"></div>
+              <div class="prob-bar-home" style="width:${homeWin}%"></div>
+            </div>
+          </div>
+          <div class="game-meta">
+            <div class="game-meta-item">🎯 ${g.confidence.charAt(0).toUpperCase() + g.confidence.slice(1)}</div>
+            <div class="game-meta-item">⚡ Upset: ${g.upsetRisk}</div>
+            ${g.weather ? `<div class="game-meta-item">🌩️ ${g.weather.condition}</div>` : ''}
+            ${g.injury ? `<div class="game-meta-item">🏥 Injury Impact</div>` : ''}
+            ${g.locked ? `<div class="game-meta-item">🔒 Locked</div>` : ''}
+          </div>
+        </div>
+        <div style="margin-top:10px;">
+          <button class="btn btn-primary btn-sm" style="width:100%;">View Game Analysis →</button>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+// ======================= GAME DETAIL =======================
+
+function showGameDetail(id) {
+  const g = GAMES.find(g => g.id === id);
+  if (!g) return;
+  const away = NFL_TEAMS[g.away], home = NFL_TEAMS[g.home];
+  const awayWin = g.winProb, homeWin = 100 - g.winProb;
+
+  let html = `
+    <div class="detail-header">
+      <div style="text-align:center;margin-bottom:4px;">
+        ${g.locked ? `<div style="display:inline-block;padding:4px 14px;background:rgba(59,130,246,0.15);color:var(--accent-blue);border-radius:6px;font-size:12px;font-weight:700;margin-bottom:10px;">🔒 FINAL FORECAST LOCKED™ — ${g.lockedDate || 'Locked'}</div>` : ''}
+        <div style="font-size:12px;color:var(--text-muted);">${g.date} &nbsp;|&nbsp; ${g.time} &nbsp;|&nbsp; ${g.venue}</div>
+      </div>
+      <div class="detail-teams" style="margin-top:16px;">
+        <div class="detail-team">
+          ${teamLogoHTML(g.away, 72)}
+          <div class="team-name" style="font-size:20px;font-weight:800;margin-top:8px;">${away.name}</div>
+          <div class="team-record" style="font-size:13px;">${away.record}</div>
+        </div>
+        <div style="text-align:center;">
+          <div class="detail-vs">PREDICTED SCORE</div>
+          <div class="detail-pred-score" style="margin-top:4px;">
+            <span style="color:${awayWin > homeWin ? 'var(--accent-green)' : 'var(--text-secondary)'}">${g.predAwayScore}</span>
+            <span style="color:var(--text-muted);font-size:24px;"> – </span>
+            <span style="color:${homeWin > awayWin ? 'var(--accent-green)' : 'var(--text-secondary)'}">${g.predHomeScore}</span>
+          </div>
+          <div style="font-size:14px;margin-top:6px;font-weight:700;">🏆 ${NFL_TEAMS[g.winner].name}</div>
+        </div>
+        <div class="detail-team">
+          ${teamLogoHTML(g.home, 72)}
+          <div class="team-name" style="font-size:20px;font-weight:800;margin-top:8px;">${home.name}</div>
+          <div class="team-record" style="font-size:13px;">${home.record}</div>
+        </div>
+      </div>
+      <div style="margin-top:20px;">
+        <div class="prob-bar-label" style="font-size:12px;margin-bottom:6px;">
+          <span>${away.abbr} Win Probability: <strong>${awayWin}%</strong></span>
+          <span>${home.abbr} Win Probability: <strong>${homeWin}%</strong></span>
+        </div>
+        <div class="prob-bar" style="height:10px;border-radius:5px;">
+          <div class="prob-bar-away" style="width:${awayWin}%;border-radius:5px 0 0 5px;"></div>
+          <div class="prob-bar-home" style="width:${homeWin}%;border-radius:0 5px 5px 0;"></div>
+        </div>
+        <div style="display:flex;gap:16px;justify-content:center;margin-top:12px;">
+          <span class="badge-${g.confidence === 'high' ? 'high' : g.confidence === 'medium' ? 'medium' : 'low'} game-card-badge" style="position:static;">${g.confidence.toUpperCase()} CONFIDENCE</span>
+          <span style="font-size:12px;color:var(--text-muted);">⚡ Upset Risk: ${g.upsetRisk}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Why -->
+    <div style="margin-bottom:24px;">
+      <div style="font-size:16px;font-weight:700;margin-bottom:12px;">💡 Why This Prediction?</div>
+      <div class="card">
+        <p style="font-size:14px;line-height:1.7;color:var(--text-secondary);">${g.explanation}</p>
+        <div style="margin-top:12px;">
+          <div style="font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Key Factors</div>
+          ${g.factors.map(f => `<div style="font-size:13px;color:var(--text-secondary);padding:4px 0;padding-left:16px;position:relative;">• ${f}</div>`).join('')}
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tab-bar" style="margin-bottom:0;">
+      <button class="tab-btn active" onclick="showGameTab(this,'pulse-${id}')">📊 Prediction Pulse™</button>
+      <button class="tab-btn" onclick="showGameTab(this,'factors-${id}')">🔐 Key Factors</button>
+      ${g.weather ? `<button class="tab-btn" onclick="showGameTab(this,'weather-${id}')">🌩️ Weather</button>` : ''}
+      ${g.coachAnalysis ? `<button class="tab-btn" onclick="showGameTab(this,'coach-${id}')">🧠 Coach's Corner™</button>` : ''}
+      ${g.fanVotes && g.fanVotes.length ? `<button class="tab-btn" onclick="showGameTab(this,'fan-${id}')">🏟️ Fan Room</button>` : ''}
+      <button class="tab-btn" onclick="showGameTab(this,'models-${id}')">🤖 Forecast Models</button>
+    </div>
+
+    <!-- Pulse -->
+    <div class="tab-panel active" id="tab-pulse-${id}">
+      ${g.pulseHistory && g.pulseHistory.length > 1 ? `
+        <div class="pulse-timeline" style="margin-top:16px;">
+          ${g.pulseHistory.map((p, i) => `
+            <div class="pulse-entry">
+              <div class="pulse-date">${p.date}</div>
+              <div class="pulse-content">
+                <div style="display:flex;gap:24px;align-items:center;">
+                  <div>
+                    <div style="font-size:13px;color:var(--text-muted);">Predicted Score</div>
+                    <div style="font-size:20px;font-weight:800;">${away.abbr} ${p.awayScore} – ${home.abbr} ${p.homeScore}</div>
+                  </div>
+                  <div>
+                    <div style="font-size:13px;color:var(--text-muted);">${away.abbr} Win Prob</div>
+                    <div style="font-size:20px;font-weight:800;color:${i === g.pulseHistory.length - 1 && p.winProb < g.pulseHistory[0].winProb ? 'var(--accent-red)' : 'var(--accent-green)'};">${p.winProb}%</div>
+                  </div>
+                  ${i > 0 ? `
+                    <div>
+                      <div style="font-size:13px;color:var(--text-muted);">Change</div>
+                      <div style="font-size:16px;font-weight:700;color:${p.winProb < g.pulseHistory[i-1].winProb ? 'var(--accent-red)' : 'var(--accent-green)'};">
+                        ${p.winProb > g.pulseHistory[i-1].winProb ? '+' : ''}${p.winProb - g.pulseHistory[i-1].winProb}%
+                      </div>
+                    </div>
+                  ` : ''}
+                </div>
+                ${p.reasons && p.reasons.length ? `
+                  <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);">
+                    <div style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Why the forecast changed</div>
+                    ${p.reasons.map(r => `<div style="font-size:13px;color:var(--text-secondary);padding:2px 0;">• ${r}</div>`).join('')}
+                  </div>
+                ` : ''}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      ` : `<div style="padding:24px;text-align:center;color:var(--text-muted);font-size:14px;">No forecast changes recorded for this game yet. The prediction remains at its initial projection.</div>`}
+    </div>
+
+    <!-- Factors -->
+    <div class="tab-panel" id="tab-factors-${id}">
+      <div style="margin-top:16px;">
+        ${g.factors.map(f => `
+          <div class="card" style="margin-bottom:8px;padding:12px 16px;display:flex;align-items:center;gap:12px;">
+            <div style="width:8px;height:8px;border-radius:50%;background:var(--accent-cyan);flex-shrink:0;"></div>
+            <div style="font-size:13px;color:var(--text-secondary);">${f}</div>
+          </div>
+        `).join('')}
+        ${g.injury ? `
+          <div class="card" style="margin-top:12px;border-color:rgba(239,68,68,0.3);padding:16px;">
+            <div style="font-size:12px;font-weight:700;color:var(--accent-red);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">🏥 Injury Impact</div>
+            <div style="font-size:13px;color:var(--text-secondary);">Key injury considerations are affecting this forecast. Player availability changes are reflected in the current probability.</div>
+          </div>
+        ` : ''}
+      </div>
+    </div>
+
+    <!-- Weather -->
+    ${g.weather ? `
+    <div class="tab-panel" id="tab-weather-${id}">
+      <div class="card" style="margin-top:16px;border-color:rgba(6,182,212,0.3);">
+        <div style="font-size:12px;font-weight:700;color:var(--accent-cyan);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">🌩️ Weather Intelligence</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px;">
+          <div style="text-align:center;">
+            <div style="font-size:11px;color:var(--text-muted);">Wind</div>
+            <div style="font-size:18px;font-weight:800;">${g.weather.wind}</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-size:11px;color:var(--text-muted);">Temperature</div>
+            <div style="font-size:18px;font-weight:800;">${g.weather.temp}</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-size:11px;color:var(--text-muted);">Conditions</div>
+            <div style="font-size:18px;font-weight:800;">${g.weather.condition}</div>
+          </div>
+        </div>
+        <div style="padding:12px;background:var(--bg-primary);border-radius:8px;">
+          <div style="font-size:12px;font-weight:700;color:var(--accent-cyan);margin-bottom:4px;">Impact Assessment</div>
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.6;">${g.weather.impact}</p>
+        </div>
+      </div>
+    </div>
+    ` : ''}
+
+    <!-- Coach -->
+    ${g.coachAnalysis ? `
+    <div class="tab-panel" id="tab-coach-${id}">
+      <div style="margin-top:16px;">
+        <div style="font-size:16px;font-weight:700;margin-bottom:12px;">🧠 ${g.coachAnalysis.title}</div>
+        <div class="coach-card">
+          <div class="coach-evidence">
+            <div class="coach-evidence-title text-cyan">Evidence</div>
+            <div class="evidence"><p>${g.coachAnalysis.evidence}</p></div>
+          </div>
+          <div class="coach-evidence">
+            <div class="coach-evidence-title text-blue">Interpretation</div>
+            <div class="evidence interpretation"><p>${g.coachAnalysis.interpretation}</p></div>
+          </div>
+          <div class="coach-evidence">
+            <div class="coach-evidence-title text-green">Suggested Adjustment</div>
+            <div class="evidence adjustment"><p>${g.coachAnalysis.adjustment}</p></div>
+          </div>
+          <div style="margin-top:8px;">
+            <span style="font-size:12px;color:var(--text-muted);">Confidence:</span>
+            <span style="font-size:12px;font-weight:700;color:${g.coachAnalysis.confidence === 'High' ? 'var(--accent-green)' : 'var(--accent-amber)'};">${g.coachAnalysis.confidence}</span>
+          </div>
+        </div>
+        <div class="card" style="font-size:11px;color:var(--text-muted);line-height:1.5;">
+          ⚠️ Coach's Corner™ provides analytical decision-support observations. GameForecast AI™ does not communicate with or control any actual team. Recommendations are data-derived suggestions for consideration only.
+        </div>
+      </div>
+    </div>
+    ` : ''}
+
+    <!-- Fan -->
+    ${g.fanVotes && g.fanVotes.length ? `
+    <div class="tab-panel" id="tab-fan-${id}">
+      <div style="margin-top:16px;">
+        ${g.fanVotes.map(v => renderFanVote(v)).join('')}
+        <div class="card" style="font-size:11px;color:var(--text-muted);line-height:1.5;">
+          ⚠️ Fan Observation Room™ uses structured selections only. No comments, chat, or free-text submissions are included.
+        </div>
+      </div>
+    </div>
+    ` : ''}
+
+    <!-- Models -->
+    <div class="tab-panel" id="tab-models-${id}">
+      <div style="margin-top:16px;">
+        <div style="font-size:16px;font-weight:700;margin-bottom:12px;">🤖 Multi-Model Forecast System</div>
+        <p style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:16px;">
+          GameForecast AI™ does not simply ask an LLM who will win. Instead, multiple specialized analytical models produce independent forecasts, which are combined through the Consensus Forecast Engine™ to produce the final prediction.
+        </p>
+        <div style="display:grid;gap:12px;margin-bottom:20px;">
+          ${renderModelRow('Statistical Model', away.abbr, home.abbr, g.predAwayScore + 1, g.predHomeScore, '#3b82f6')}
+          ${renderModelRow('Team Strength Model', away.abbr, home.abbr, g.predAwayScore + 2, g.predHomeScore - 1, '#06b6d4')}
+          ${renderModelRow('Player Availability Model', away.abbr, home.abbr, g.predAwayScore, g.predHomeScore + 1, '#14b8a6')}
+          ${renderModelRow('Recent Form Model', away.abbr, home.abbr, g.predAwayScore - 1, g.predHomeScore + 2, '#f59e0b')}
+          ${renderModelRow('Simulation Model', away.abbr, home.abbr, g.predAwayScore - 1, g.predHomeScore, '#a855f7')}
+          ${g.weather ? renderModelRow('Weather Impact Model', away.abbr, home.abbr, g.predAwayScore - 2, g.predHomeScore + 1, '#64748b') : ''}
+        </div>
+        <div class="card" style="border-color:var(--accent-cyan);background:rgba(6,182,212,0.05);">
+          <div style="font-size:12px;font-weight:700;color:var(--accent-cyan);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Consensus Forecast Engine™</div>
+          <div style="font-size:24px;font-weight:900;text-align:center;margin:8px 0;">
+            ${away.abbr} <span style="color:var(--accent-green)">${g.predAwayScore}</span> – ${home.abbr} <span style="color:${homeWin > awayWin ? 'var(--accent-green)' : 'var(--text-secondary)'}">${g.predHomeScore}</span>
+          </div>
+          <div style="text-align:center;font-size:14px;font-weight:700;">${NFL_TEAMS[g.winner].name} &nbsp;|&nbsp; Win Probability: ${g.winProb}%</div>
+        </div>
+        <div style="margin-top:16px;">
+          <div style="font-size:14px;font-weight:700;margin-bottom:12px;">Prediction Architecture</div>
+          <div class="arch-flow">
+            <div class="arch-box">📊 Sports Data</div><div class="arch-arrow">↓</div>
+            <div class="arch-box">⚙️ Feature Processing</div><div class="arch-arrow">↓</div>
+            <div class="arch-box">📈 Statistical / ML Models</div><div class="arch-arrow">↓</div>
+            <div class="arch-box">🎲 Simulation Engine</div><div class="arch-arrow">↓</div>
+            <div class="arch-box" style="border-color:var(--accent-cyan);">🔄 Consensus Forecast Engine™</div><div class="arch-arrow">↓</div>
+            <div class="arch-box">💡 GameForecast AI™ Explanation Layer</div><div class="arch-arrow">↓</div>
+            <div class="arch-box" style="border-color:var(--accent-green);">✅ Published Forecast</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('modal-body').innerHTML = html;
+  document.getElementById('game-modal').classList.add('active');
+}
+
+function renderModelRow(name, away, home, awayScore, homeScore, color) {
+  const maxScore = Math.max(awayScore, homeScore, 1);
+  const awayWidth = (awayScore / 40) * 100;
+  const homeWidth = (homeScore / 40) * 100;
+  return `
+    <div class="model-row">
+      <div class="model-name">${name}</div>
+      <div style="flex:1;">
+        <div style="display:flex;gap:4px;align-items:center;margin-bottom:2px;">
+          <div class="model-bar-container" style="height:20px;">
+            <div style="height:100%;background:${color};border-radius:6px 0 0 6px;width:${awayWidth}%;position:absolute;left:0;"></div>
+            <div class="model-label" style="left:8px;color:#fff;font-size:11px;">${away} ${awayScore}</div>
+          </div>
+          <div class="model-bar-container" style="height:20px;">
+            <div style="height:100%;background:${color};opacity:0.6;border-radius:0 6px 6px 0;width:${homeWidth}%;position:absolute;left:0;"></div>
+            <div class="model-label" style="left:8px;color:var(--text-secondary);font-size:11px;">${home} ${homeScore}</div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function showGameTab(btn, tabId) {
+  const parent = btn.parentElement;
+  parent.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  const container = parent.nextElementSibling;
+  // Find all sibling tab-panels
+  const modal = document.getElementById('modal-body');
+  modal.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-' + tabId).classList.add('active');
+}
+
+function closeGameDetail() {
+  document.getElementById('game-modal').classList.remove('active');
+}
+
+// ======================= PREDICTION PULSE =======================
+
+function renderPulse() {
+  const pulseGames = GAMES.filter(g => g.pulseHistory && g.pulseHistory.length > 1);
+  const el = document.getElementById('pulse-content');
+  el.innerHTML = `
+    <div style="font-size:14px;color:var(--text-secondary);line-height:1.6;margin-bottom:24px;">
+      Prediction Pulse™ tracks how and why forecasts change as new information becomes available. When injury reports, weather forecasts, player availability, or team announcements materially affect a game, the forecast is recalculated. All changes are logged and displayed here.
+    </div>
+
+    ${pulseGames.map(g => {
+      const away = NFL_TEAMS[g.away], home = NFL_TEAMS[g.home];
+      const first = g.pulseHistory[0], last = g.pulseHistory[g.pulseHistory.length - 1];
+      const probChange = last.winProb - first.winProb;
+      return `
+        <div class="card" style="margin-bottom:20px;cursor:pointer;" onclick="showGameDetail(${g.id})">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+            <div>
+              <div style="font-size:16px;font-weight:700;">${away.name} @ ${home.name}</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:2px;">${g.date} &nbsp;|&nbsp; ${g.time}</div>
+            </div>
+            <div style="text-align:right;">
+              ${badgeHTML(g)}
+            </div>
+          </div>
+
+          <!-- Forecast Change Summary -->
+          <div style="display:flex;gap:32px;margin-bottom:16px;padding:16px;background:var(--bg-primary);border-radius:8px;">
+            <div style="text-align:center;">
+              <div style="font-size:11px;color:var(--text-muted);">Initial Prediction</div>
+              <div style="font-size:16px;font-weight:700;margin-top:4px;">${away.abbr} ${first.awayScore} – ${home.abbr} ${first.homeScore}</div>
+              <div style="font-size:12px;color:var(--text-secondary);margin-top:2px;">${away.abbr} Win: ${first.winProb}%</div>
+            </div>
+            <div style="display:flex;align-items:center;font-size:20px;color:var(--text-muted);">→</div>
+            <div style="text-align:center;">
+              <div style="font-size:11px;color:var(--text-muted);">Current Prediction</div>
+              <div style="font-size:16px;font-weight:700;margin-top:4px;">${away.abbr} ${last.awayScore} – ${home.abbr} ${last.homeScore}</div>
+              <div style="font-size:12px;color:${probChange < 0 ? 'var(--accent-red)' : 'var(--accent-green)'};margin-top:2px;">${away.abbr} Win: ${last.winProb}% (${probChange > 0 ? '+' : ''}${probChange}%)</div>
+            </div>
+          </div>
+
+          <!-- Timeline -->
+          <div style="font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Forecast Change Timeline</div>
+          <div class="pulse-timeline">
+            ${g.pulseHistory.map((p, i) => `
+              <div class="pulse-entry">
+                <div class="pulse-date">${p.date}</div>
+                <div class="pulse-content">
+                  <div style="display:flex;gap:24px;align-items:center;">
+                    <div>
+                      <div style="font-size:14px;font-weight:700;">${away.abbr} ${p.awayScore} – ${home.abbr} ${p.homeScore}</div>
+                      <div style="font-size:12px;color:var(--text-secondary);">${away.abbr} Win Probability: ${p.winProb}%</div>
+                    </div>
+                    ${i > 0 ? `
+                      <div style="font-size:13px;font-weight:700;padding:3px 10px;border-radius:4px;background:${p.winProb < g.pulseHistory[i-1].winProb ? 'rgba(239,68,68,0.1);color:var(--accent-red)' : 'rgba(34,197,94,0.1);color:var(--accent-green)'};">
+                        ${p.winProb > g.pulseHistory[i-1].winProb ? '+' : ''}${p.winProb - g.pulseHistory[i-1].winProb}%
+                      </div>
+                    ` : ''}
+                  </div>
+                  ${p.reasons && p.reasons.length ? `
+                    <div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border);">
+                      ${p.reasons.map(r => `<div style="font-size:12px;color:var(--text-secondary);padding:2px 0;padding-left:12px;border-left:2px solid var(--border-light);margin-bottom:4px;">• ${r}</div>`).join('')}
+                    </div>
+                  ` : ''}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }).join('')}
+
+    <!-- Injury-Affected Game -->
+    <div class="card" style="margin-bottom:20px;border-color:rgba(239,68,68,0.3);">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <div>
+          <div style="font-size:16px;font-weight:700;">🩺 Injury-Affected Forecasts</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Games where player availability is impacting predictions</div>
+        </div>
+      </div>
+      ${GAMES.filter(g => g.injury).map(g => {
+        const away = NFL_TEAMS[g.away], home = NFL_TEAMS[g.home];
+        return `
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--bg-primary);border-radius:8px;margin-bottom:8px;cursor:pointer;" onclick="showGameDetail(${g.id})">
+            <div>
+              <div style="font-weight:700;">${away.name} @ ${home.name}</div>
+              <div style="font-size:12px;color:var(--accent-red);margin-top:2px;">🏥 Key player availability affecting forecast</div>
+            </div>
+            <div style="font-size:14px;font-weight:700;">${away.abbr} ${g.predAwayScore} – ${home.abbr} ${g.predHomeScore}</div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+
+    <!-- Weather-Impacted Games -->
+    ${GAMES.filter(g => g.weather).length > 0 ? `
+    <div class="card" style="margin-bottom:20px;border-color:rgba(6,182,212,0.3);">
+      <div style="font-size:16px;font-weight:700;margin-bottom:12px;">🌩️ Weather-Impacted Forecasts</div>
+      ${GAMES.filter(g => g.weather).map(g => {
+        const away = NFL_TEAMS[g.away], home = NFL_TEAMS[g.home];
+        return `
+          <div style="padding:12px;background:var(--bg-primary);border-radius:8px;margin-bottom:8px;cursor:pointer;" onclick="showGameDetail(${g.id})">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <div>
+                <div style="font-weight:700;">${away.name} @ ${home.name}</div>
+                <div style="font-size:12px;color:var(--accent-cyan);margin-top:2px;">Wind: ${g.weather.wind} | ${g.weather.temp} | ${g.weather.condition}</div>
+              </div>
+              <div style="font-size:12px;color:var(--text-secondary);max-width:300px;text-align:right;">${g.weather.impact}</div>
+            </div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+    ` : ''}
+  `;
+}
+
+// ======================= COACH'S CORNER =======================
+
+function showCoachTab(tab) {
+  document.querySelectorAll('#coach-tabs .tab-btn').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+  renderCoach(tab);
+}
+
+function renderCoach(tab) {
+  const el = document.getElementById('coach-content');
+  if (tab === 'overview') {
+    const coachGames = GAMES.filter(g => g.coachAnalysis);
+    el.innerHTML = `
+      <div style="font-size:14px;color:var(--text-secondary);line-height:1.6;margin-bottom:24px;">
+        Coach's Corner™ provides data-based situational observations and strategic considerations for each game. This is an analytical decision-support feature — GameForecast AI™ does not communicate with or control any actual team. Each sport will eventually have its own specialized Coach's Corner™ system.
+      </div>
+
+      <!-- Sport Architecture -->
+      <div style="margin-bottom:24px;">
+        <div style="font-size:14px;font-weight:700;margin-bottom:12px;">🏅 Sport-Specific Architecture</div>
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;">
+          <div class="card" style="text-align:center;border-color:var(--accent-cyan);">
+            <div style="font-size:20px;margin-bottom:4px;">🏈</div>
+            <div style="font-size:12px;font-weight:700;">NFL</div>
+            <div style="font-size:10px;color:var(--accent-cyan);margin-top:2px;">ACTIVE</div>
+          </div>
+          <div class="card" style="text-align:center;opacity:0.5;">
+            <div style="font-size:20px;margin-bottom:4px;">🏀</div>
+            <div style="font-size:12px;font-weight:700;">NBA</div>
+            <div style="font-size:10px;color:var(--text-muted);margin-top:2px;">COMING SOON</div>
+          </div>
+          <div class="card" style="text-align:center;opacity:0.5;">
+            <div style="font-size:20px;margin-bottom:4px;">⚾</div>
+            <div style="font-size:12px;font-weight:700;">MLB</div>
+            <div style="font-size:10px;color:var(--text-muted);margin-top:2px;">COMING SOON</div>
+          </div>
+          <div class="card" style="text-align:center;opacity:0.5;">
+            <div style="font-size:20px;margin-bottom:4px;">🏒</div>
+            <div style="font-size:12px;font-weight:700;">NHL</div>
+            <div style="font-size:10px;color:var(--text-muted);margin-top:2px;">COMING SOON</div>
+          </div>
+          <div class="card" style="text-align:center;opacity:0.5;">
+            <div style="font-size:20px;margin-bottom:4px;">⚽</div>
+            <div style="font-size:12px;font-weight:700;">Soccer</div>
+            <div style="font-size:10px;color:var(--text-muted);margin-top:2px;">COMING SOON</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Available Analysis -->
+      <div style="font-size:14px;font-weight:700;margin-bottom:12px;">Available Analyses — Week 2</div>
+      ${coachGames.map(g => {
+        const away = NFL_TEAMS[g.away], home = NFL_TEAMS[g.home], ca = g.coachAnalysis;
+        return `
+          <div class="coach-card" style="cursor:pointer;" onclick="showGameDetail(${g.id})">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+              <div style="font-size:14px;font-weight:700;">${away.name} @ ${home.name}</div>
+              <span class="badge-${ca.confidence === 'High' ? 'high' : 'medium'} game-card-badge" style="position:static;">${ca.confidence.toUpperCase()}</span>
+            </div>
+            <div style="font-size:13px;font-weight:700;color:var(--accent-cyan);margin-bottom:6px;">${ca.title}</div>
+            <div style="font-size:13px;color:var(--text-secondary);line-height:1.5;">${ca.evidence}</div>
+          </div>
+        `;
+      }).join('')}
+    `;
+  } else {
+    const g = GAMES.find(g => g.id === (tab === 'buffalo' ? 0 : tab === 'kansas' ? 1 : tab === 'sanfran' ? 2 : tab === 'baltimore' ? 7 : 0));
+    // Fallback to game 0 for unknown tabs
+    const gameRef = GAMES.find(g2 => {
+      if (tab === 'buffalo') return g2.id === 0;
+      if (tab === 'kansas') return g2.id === 1;
+      if (tab === 'sanfran') return g2.id === 2;
+      if (tab === 'baltimore') return g2.id === 7;
+      return g2.id === 0;
+    });
+    const away = NFL_TEAMS[gameRef.away], home = NFL_TEAMS[gameRef.home], ca = gameRef.coachAnalysis;
+    el.innerHTML = `
+      <div style="margin-bottom:16px;">
+        <div style="font-size:16px;font-weight:700;">${away.name} @ ${home.name}</div>
+        <div style="font-size:13px;color:var(--text-muted);">${gameRef.date} | ${gameRef.time}</div>
+      </div>
+      <div class="coach-card">
+        <div style="font-size:16px;font-weight:700;margin-bottom:16px;">🧠 ${ca.title}</div>
+        <div class="coach-evidence">
+          <div class="coach-evidence-title text-cyan">Evidence</div>
+          <div class="evidence"><p>${ca.evidence}</p></div>
+        </div>
+        <div class="coach-evidence">
+          <div class="coach-evidence-title text-blue">Interpretation</div>
+          <div class="evidence interpretation"><p>${ca.interpretation}</p></div>
+        </div>
+        <div class="coach-evidence">
+          <div class="coach-evidence-title text-green">Suggested Adjustment</div>
+          <div class="evidence adjustment"><p>${ca.adjustment}</p></div>
+        </div>
+        <div style="margin-top:12px;">
+          <span style="font-size:12px;color:var(--text-muted);">Confidence:</span>
+          <span style="font-size:12px;font-weight:700;color:${ca.confidence === 'High' ? 'var(--accent-green)' : 'var(--accent-amber)'};">${ca.confidence}</span>
+        </div>
+      </div>
+      <div class="card" style="font-size:11px;color:var(--text-muted);line-height:1.5;margin-top:12px;">
+        ⚠️ Coach's Corner™ provides analytical decision-support observations. GameForecast AI™ does not communicate with or control any actual team.
+      </div>
+      <div style="margin-top:16px;">
+        <button class="btn btn-primary" onclick="showGameDetail(${gameRef.id})">View Full Game Analysis →</button>
+      </div>
+    `;
+  }
+}
+
+// ======================= FAN OBSERVATION ROOM =======================
+
+function renderFanVote(v) {
+  return `
+    <div class="vote-card">
+      <div style="font-size:11px;color:var(--accent-teal);font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Structured Fan Vote — No Comments Allowed</div>
+      <div class="vote-question">${v.question}</div>
+      ${v.options.map((o, i) => {
+        const colors = ['var(--accent-cyan)', 'var(--accent-blue)', 'var(--accent-green)', 'var(--accent-amber)'];
+        return `
+          <div class="vote-option ${i === 0 ? 'selected' : ''}">
+            <div>
+              <div class="vote-option-text">${o.text}</div>
+              <div class="vote-option-bar">
+                <div class="vote-option-bar-fill" style="width:${o.pct}%;background:${colors[i % 4]};"></div>
+              </div>
+            </div>
+            <div class="vote-option-pct" style="color:${colors[i % 4]};">${o.pct}%</div>
+          </div>
+        `;
+      }).join('')}
+      <div class="vote-footer">${v.total.toLocaleString()} fan votes — Results are aggregated selections only</div>
+    </div>
+  `;
+}
+
+function renderFan() {
+  const gamesWithVotes = GAMES.filter(g => g.fanVotes && g.fanVotes.length > 0);
+  const el = document.getElementById('fan-content');
+  el.innerHTML = `
+    <div class="card" style="border-color:rgba(20,184,166,0.3);margin-bottom:24px;">
+      <div style="font-size:14px;font-weight:700;color:var(--accent-teal);margin-bottom:8px;">⚠️ No Comments, No Chat, No Free-Text</div>
+      <div style="font-size:13px;line-height:1.6;color:var(--text-secondary);">
+        Fan Observation Room™ uses structured selections only. This avoids toxic discussions, harassment, spam, arguments, and moderation problems. All participation is through predefined voting options. No comments, direct messages, replies, or free-text submissions appear anywhere.
+      </div>
+    </div>
+
+    <div style="font-size:14px;font-weight:700;margin-bottom:16px;">🏟️ Active Fan Votes — NFL Week 2</div>
+
+    ${gamesWithVotes.map(g => {
+      const away = NFL_TEAMS[g.away], home = NFL_TEAMS[g.home];
+      return `
+        <div style="margin-bottom:24px;">
+          <div style="font-size:15px;font-weight:700;margin-bottom:12px;">${away.name} @ ${home.name}</div>
+          ${g.fanVotes.map(v => renderFanVote(v)).join('')}
+          <button class="btn btn-outline btn-sm" onclick="showGameDetail(${g.id})">View Full Game Analysis →</button>
+        </div>
+      `;
+    }).join('')}
+
+    <!-- Fan vs AI vs Coach -->
+    <div style="font-size:16px;font-weight:700;margin-bottom:12px;">🎯 Fan vs. AI vs. Coach Comparison</div>
+    <div class="card" style="margin-bottom:16px;">
+      <div style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:16px;">
+        For key game situations, the system compares the fan majority decision, the GameForecast AI™ recommendation, and the actual coach decision — then evaluates the outcome using historical probability and situational data, not just the result.
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Situation</th>
+              <th>Fan Majority</th>
+              <th>GameForecast AI™</th>
+              <th>Actual Coach</th>
+              <th>Result</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>4th & 2 at HOU 41 — <span style="color:var(--text-muted);">BUF possession</span></td>
+              <td style="color:var(--accent-teal);">Go for it — 64%</td>
+              <td>Go for it</td>
+              <td>Punt</td>
+              <td style="color:var(--text-muted);">Game in progress</td>
+            </tr>
+            <tr>
+              <td>3rd & 7 at PIT 34 — <span style="color:var(--text-muted);">IND possession</span></td>
+              <td style="color:var(--accent-teal);">Short pass — 52%</td>
+              <td>Short pass</td>
+              <td>—</td>
+              <td style="color:var(--text-muted);">Pre-game</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="font-size:11px;color:var(--text-muted);margin-top:8px;">
+        The application does not automatically claim which decision was "correct" based only on the eventual outcome. Evaluations use historical probability and situational data.
+      </div>
+    </div>
+
+    <!-- Sport-Specific Fan Rooms -->
+    <div style="font-size:14px;font-weight:700;margin-bottom:12px;">🏅 Sport-Specific Fan Observation Rooms</div>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;">
+      <div class="card" style="text-align:center;">
+        <div style="font-size:24px;margin-bottom:4px;">🏈</div>
+        <div style="font-size:12px;font-weight:700;">NFL</div>
+        <div style="font-size:10px;color:var(--accent-cyan);margin-top:2px;">4th Down / Run-Pass / Blitz</div>
+      </div>
+      <div class="card" style="text-align:center;opacity:0.5;">
+        <div style="font-size:24px;margin-bottom:4px;">🏀</div>
+        <div style="font-size:12px;font-weight:700;">NBA</div>
+        <div style="font-size:10px;color:var(--text-muted);margin-top:2px;">Timeout / Attack / Shoot</div>
+      </div>
+      <div class="card" style="text-align:center;opacity:0.5;">
+        <div style="font-size:24px;margin-bottom:4px;">⚾</div>
+        <div style="font-size:12px;font-weight:700;">MLB</div>
+        <div style="font-size:10px;color:var(--text-muted);margin-top:2px;">Steal / Bunt / Pitcher</div>
+      </div>
+      <div class="card" style="text-align:center;opacity:0.5;">
+        <div style="font-size:24px;margin-bottom:4px;">🏒</div>
+        <div style="font-size:12px;font-weight:700;">NHL</div>
+        <div style="font-size:10px;color:var(--text-muted);margin-top:2px;">Pull Goalie / Line Change</div>
+      </div>
+      <div class="card" style="text-align:center;opacity:0.5;">
+        <div style="font-size:24px;margin-bottom:4px;">⚽</div>
+        <div style="font-size:12px;font-weight:700;">Soccer</div>
+        <div style="font-size:10px;color:var(--text-muted);margin-top:2px;">Formation / Press / Sub</div>
+      </div>
+    </div>
+  `;
+}
+
+// ======================= ACCURACY CENTER =======================
+
+function renderAccuracy() {
+  const d = ACCURACY_DATA;
+  const el = document.getElementById('accuracy-content');
+  el.innerHTML = `
+    <div class="card" style="border-color:rgba(6,182,212,0.3);margin-bottom:24px;">
+      <div style="font-size:14px;font-weight:700;color:var(--accent-cyan);margin-bottom:8px;">🔒 Forecast Integrity Policy</div>
+      <div style="font-size:13px;color:var(--text-secondary);line-height:1.6;">
+        GameForecast AI™ never changes a prediction after the official forecast has been locked. The Final Forecast Lock™ ensures all accuracy measurements are based on the last published prediction before game start. Results are final and Never retroactively adjusted.
+      </div>
+    </div>
+
+    <!-- Season Overview -->
+    <div style="font-size:16px;font-weight:700;margin-bottom:16px;">📈 ${d.season} — Season Performance</div>
+
+    <div class="stat-grid" style="margin-bottom:32px;">
+      <div class="stat-card">
+        <div class="stat-card-label">Games Forecast</div>
+        <div class="stat-card-value">${d.totalGames}</div>
+        <div class="stat-card-sublabel">Total NFL 2026 games</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-label">Correct Winners</div>
+        <div class="stat-card-value text-green">${d.correctWinners}</div>
+        <div class="stat-card-sublabel">of ${d.totalGames} games</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-label">Winner Accuracy</div>
+        <div class="stat-card-value text-cyan">${d.winnerAccuracy}%</div>
+        <div class="stat-card-sublabel">Season-to-date</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-label">Avg Score Error</div>
+        <div class="stat-card-value text-amber">${d.avgScoreError}</div>
+        <div class="stat-card-sublabel">Points per team</div>
+      </div>
+    </div>
+
+    <!-- By Confidence Level -->
+    <div style="font-size:16px;font-weight:700;margin-bottom:16px;">Accuracy by Confidence Level</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px;">
+      <div class="card" style="border-color:rgba(34,197,94,0.3);text-align:center;padding:24px;">
+        <div style="font-size:12px;font-weight:700;color:var(--accent-green);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">High Confidence</div>
+        <div style="font-size:36px;font-weight:900;color:var(--accent-green);">${d.highConfAccuracy}%</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">${d.highConfCorrect} of ${d.highConfFores} games</div>
+        <div style="margin-top:12px;height:6px;background:var(--bg-primary);border-radius:3px;overflow:hidden;">
+          <div style="width:${d.highConfAccuracy}%;height:100%;background:var(--accent-green);border-radius:3px;"></div>
+        </div>
+      </div>
+      <div class="card" style="border-color:rgba(245,158,11,0.3);text-align:center;padding:24px;">
+        <div style="font-size:12px;font-weight:700;color:var(--accent-amber);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Medium Confidence</div>
+        <div style="font-size:36px;font-weight:900;color:var(--accent-amber);">${d.medConfAccuracy}%</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">${d.medConfCorrect} of ${d.medConfFores} games</div>
+        <div style="margin-top:12px;height:6px;background:var(--bg-primary);border-radius:3px;overflow:hidden;">
+          <div style="width:${d.medConfAccuracy}%;height:100%;background:var(--accent-amber);border-radius:3px;"></div>
+        </div>
+      </div>
+      <div class="card" style="border-color:rgba(239,68,68,0.3);text-align:center;padding:24px;">
+        <div style="font-size:12px;font-weight:700;color:var(--accent-red);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Low Confidence</div>
+        <div style="font-size:36px;font-weight:900;color:var(--accent-red);">${d.lowConfAccuracy}%</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">${d.lowConfCorrect} of ${d.lowConfFores} games</div>
+        <div style="margin-top:12px;height:6px;background:var(--bg-primary);border-radius:3px;overflow:hidden;">
+          <div style="width:${d.lowConfAccuracy}%;height:100%;background:var(--accent-red);border-radius:3px;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Upset Accuracy -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:32px;">
+      <div class="card">
+        <div style="font-size:14px;font-weight:700;margin-bottom:12px;">🎯 Upset Predictions</div>
+        <div style="font-size:28px;font-weight:800;text-orange;">${d.upsetAccuracy}%</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">${d.upsetCorrect} of ${d.upsetTotal} upsets correctly predicted</div>
+      </div>
+      <div class="card">
+        <div style="font-size:14px;font-weight:700;margin-bottom:12px;">🔒 Forecast Lock™ Status</div>
+        <div style="font-size:13px;color:var(--text-secondary);line-height:1.6;">
+          All forecasts are locked shortly before game kickoff. Once locked, the prediction enters the official accuracy record and is never modified.
+          <br><br>
+          <strong>Week 2 Locked:</strong> 1 game (IND @ PIT)
+          <br>
+          <strong>Week 2 Pending:</strong> 15 games
+        </div>
+      </div>
+    </div>
+
+    <!-- Post-Game Learning Example -->
+    <div style="font-size:16px;font-weight:700;margin-bottom:16px;">📊 Post-Game Learning Example — Week 1</div>
+    <div class="card" style="margin-bottom:24px;border-color:rgba(148,163,184,0.3);">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+        <div>
+          <div style="font-size:15px;font-weight:700;">${NFL_TEAMS[COMPLETED_GAME.away].name} @ ${NFL_TEAMS[COMPLETED_GAME.home].name}</div>
+          <div style="font-size:12px;color:var(--text-muted);">Thu, Sep 4, 2026 — Season Opener</div>
+        </div>
+        <div class="badge-completed game-card-badge" style="position:static;">COMPLETED</div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+        <div style="padding:16px;background:var(--bg-primary);border-radius:8px;">
+          <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Forecast</div>
+          <div style="font-size:18px;font-weight:800;">${NFL_TEAMS[COMPLETED_GAME.away].abbr} ${COMPLETED_GAME.predAwayScore} – ${NFL_TEAMS[COMPLETED_GAME.home].abbr} ${COMPLETED_GAME.predHomeScore}</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:2px;">Winner: ${NFL_TEAMS[COMPLETED_GAME.winner].name} (${COMPLETED_GAME.winProb}%)</div>
+        </div>
+        <div style="padding:16px;background:var(--bg-primary);border-radius:8px;">
+          <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Actual Result</div>
+          <div style="font-size:18px;font-weight:800;">${NFL_TEAMS[COMPLETED_GAME.away].abbr} ${COMPLETED_GAME.actualAwayScore} – ${NFL_TEAMS[COMPLETED_GAME.home].abbr} ${COMPLETED_GAME.actualHomeScore}</div>
+          <div style="font-size:12px;color:var(--accent-green);margin-top:2px;">✅ Winner correctly predicted</div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+        <div style="padding:12px;background:var(--bg-primary);border-radius:8px;">
+          <div style="font-size:11px;color:var(--text-muted);margin-bottom:4px;">Score Error</div>
+          <div style="font-size:14px;font-weight:700;">${NFL_TEAMS[COMPLETED_GAME.away].abbr}: ${COMPLETED_GAME.scoreErrorAway} pts &nbsp;|&nbsp; ${NFL_TEAMS[COMPLETED_GAME.home].abbr}: ${COMPLETED_GAME.scoreErrorHome} pts</div>
+        </div>
+        <div style="padding:12px;background:var(--bg-primary);border-radius:8px;">
+          <div style="font-size:11px;color:var(--text-muted);margin-bottom:4px;">Confidence</div>
+          <div style="font-size:14px;font-weight:700;">${COMPLETED_GAME.confidence.charAt(0).toUpperCase() + COMPLETED_GAME.confidence.slice(1)}</div>
+        </div>
+      </div>
+
+      <div style="margin-bottom:12px;">
+        <div style="font-size:12px;font-weight:700;color:var(--accent-green);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">What the Model Got Right</div>
+        ${COMPLETED_GAME.gotRight.map(r => `<div style="font-size:13px;color:var(--text-secondary);padding:2px 0;padding-left:16px;">✅ ${r}</div>`).join('')}
+      </div>
+      <div>
+        <div style="font-size:12px;font-weight:700;color:var(--accent-amber);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">What the Model Underestimated</div>
+        ${COMPLETED_GAME.gotWrong.map(r => `<div style="font-size:13px;color:var(--text-secondary);padding:2px 0;padding-left:16px;">⚠️ ${r}</div>`).join('')}
+      </div>
+    </div>
+
+    <!-- Final Forecast Lock Example -->
+    <div style="font-size:16px;font-weight:700;margin-bottom:16px;">🔒 Final Forecast Lock™ Example</div>
+    <div class="card" style="border-color:rgba(59,130,246,0.3);">
+      <div style="font-size:12px;font-weight:700;color:var(--accent-blue);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">Official Locked Forecast</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div>
+          <div style="font-size:13px;color:var(--text-muted);">Game</div>
+          <div style="font-size:16px;font-weight:700;">Indianapolis Colts @ Pittsburgh Steelers</div>
+          <div style="font-size:13px;color:var(--text-muted);margin-top:8px;">Locked Date</div>
+          <div style="font-size:14px;font-weight:600;">September 13, 2026 at 12:30 PM ET</div>
+        </div>
+        <div>
+          <div style="font-size:13px;color:var(--text-muted);">Predicted Score</div>
+          <div style="font-size:20px;font-weight:800;">IND 17 – PIT 24</div>
+          <div style="font-size:13px;color:var(--text-muted);margin-top:8px;">Win Probability</div>
+          <div style="font-size:14px;font-weight:600;">PIT 72%</div>
+        </div>
+      </div>
+      <div style="margin-top:12px;padding:10px;background:var(--bg-primary);border-radius:6px;font-size:12px;color:var(--text-muted);">
+        Once locked, this forecast becomes the official record for accuracy tracking. No subsequent information will modify this prediction's accuracy record.
+      </div>
+    </div>
+  `;
+}
+
+// ======================= ABOUT =======================
+
+function renderAbout() {
+  const el = document.getElementById('about-content');
+  el.innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+      <div>
+        <div style="font-size:14px;font-weight:700;margin-bottom:12px;">About GameForecast AI™</div>
+        <div class="card" style="line-height:1.7;font-size:13px;color:var(--text-secondary);">
+          <p>GameForecast AI™ is an AI-powered professional sports forecasting and game-intelligence platform.</p>
+          <p style="margin-top:8px;">For every upcoming game, GameForecast AI™ answers:</p>
+          <ul style="margin-top:4px;padding-left:20px;">
+            <li><strong>What</strong> is likely to happen?</li>
+            <li><strong>Why</strong> does the system believe that?</li>
+            <li><strong>What</strong> has changed since the previous forecast?</li>
+            <li><strong>What</strong> does data suggest coaches should consider?</li>
+            <li><strong>What</strong> do fans think should happen during key situations?</li>
+          </ul>
+          <p style="margin-top:8px;">The system updates forecasts as new information becomes available: injury reports, player availability, starting lineup changes, weather forecasts, news, and performance data.</p>
+          <p style="margin-top:8px;">All forecasts are tracked for accuracy. Predictions are never retroactively adjusted after the official forecast is locked.</p>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:14px;font-weight:700;margin-bottom:12px;">Product Positioning</div>
+        <div class="card" style="line-height:1.7;font-size:13px;color:var(--text-secondary);">
+          <div style="font-size:16px;font-weight:800;margin-bottom:8px;">GameForecast AI™</div>
+          <div style="font-size:14px;color:var(--accent-cyan);margin-bottom:8px;">Predict. Analyze. Understand the Game.</div>
+          <p>AI-powered sports forecasting and game intelligence — not gambling advice.</p>
+        </div>
+
+        <div style="font-size:14px;font-weight:700;margin-bottom:12px;margin-top:20px;">Prototype Status</div>
+        <div class="card" style="line-height:1.7;font-size:13px;color:var(--text-secondary);">
+          <p>This is a <strong>working prototype</strong> demonstrating the product concept. All data shown is <strong>simulated/mock data</strong> for demonstration purposes only.</p>
+          <p style="margin-top:8px;">Features represented:</p>
+          <ul style="margin-top:4px;padding-left:20px;">
+            <li>Prediction Center™ with matchup cards</li>
+            <li>Prediction Pulse™ with forecast change timeline</li>
+            <li>Coach's Corner™ with evidence/interpretation/adjustment</li>
+            <li>Fan Observation Room™ with structured voting only</li>
+            <li>Accuracy Center™ with confidence-based tracking</li>
+            <li>Final Forecast Lock™ for integrity</li>
+            <li>Post-game learning and self-evaluation</li>
+            <li>Multi-model consensus architecture</li>
+            <li>Weather intelligence for outdoor sports</li>
+            <li>Sport-specific architecture (NFL active, NBA/MLB/NHL/Soccer planned)</li>
+          </ul>
+          <p style="margin-top:8px;color:var(--accent-cyan);font-weight:600;">Data is clearly marked as mock/demo and isolated for future API integration.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Architecture -->
+    <div style="font-size:14px;font-weight:700;margin-bottom:12px;margin-top:20px;">Future Data Architecture</div>
+    <div class="card" style="margin-bottom:24px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div>
+          <div style="font-size:12px;font-weight:700;color:var(--accent-cyan);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">External APIs (Mocked in prototype)</div>
+          <div style="font-size:13px;line-height:1.8;color:var(--text-secondary);">
+            <div style="padding:6px 12px;background:var(--bg-primary);border-radius:6px;margin-bottom:4px;">📊 Sports Data API — Schedules, teams, rosters, statistics, standings</div>
+            <div style="padding:6px 12px;background:var(--bg-primary);border-radius:6px;margin-bottom:4px;">📰 News API — Team news, injuries, transactions, suspensions</div>
+            <div style="padding:6px 12px;background:var(--bg-primary);border-radius:6px;margin-bottom:4px;">🌤️ Weather API — Game-time weather forecasts</div>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:12px;font-weight:700;color:var(--accent-blue);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Internal Systems</div>
+          <div style="font-size:13px;line-height:1.8;color:var(--text-secondary);">
+            <div style="padding:6px 12px;background:var(--bg-primary);border-radius:6px;margin-bottom:4px;">⚙️ Feature Processing — Data normalization and feature engineering</div>
+            <div style="padding:6px 12px;background:var(--bg-primary);border-radius:6px;margin-bottom:4px;">📈 Statistical / ML Models — Multiple prediction engines</div>
+            <div style="padding:6px 12px;background:var(--bg-primary);border-radius:6px;margin-bottom:4px;">🎲 Simulation Engine — Monte Carlo game simulations</div>
+            <div style="padding:6px 12px;background:var(--bg-primary);border-radius:6px;margin-bottom:4px;">🔄 Consensus Forecast Engine™ — Model combination</div>
+            <div style="padding:6px 12px;background:var(--bg-primary);border-radius:6px;margin-bottom:4px;">💡 GameForecast AI™ Explanation Layer — Human-readable output</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Disclaimer -->
+    <div style="font-size:14px;font-weight:700;margin-bottom:12px;">⚠️ Disclaimer</div>
+    <div class="card" style="border-color:rgba(59,130,246,0.3);">
+      <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">
+        GameForecast AI™ provides AI-generated sports forecasts, statistical analysis, and game-outcome projections for informational, analytical, and entertainment purposes only.
+      </p>
+      <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;margin-top:8px;">
+        GameForecast AI™ is not a gambling, wagering, sportsbook, or betting-advice service. Predictions are probabilistic and may be incorrect. No outcome is guaranteed, and forecasts should not be relied upon for financial or wagering decisions.
+      </p>
+      <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;margin-top:8px;">
+        "Final Forecast Lock™" refers only to locking the system's forecast for accuracy tracking and must never imply a gambling "lock."
+      </p>
+      <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;margin-top:8px;">
+        This prototype uses simulated/mock data for demonstration purposes only. No live data sources are connected.
+      </p>
+    </div>
+  `;
+}
+
+// ======================= INIT =======================
+
+// Close modal on escape key
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeGameDetail();
+});
+
+// Close modal on overlay click
+document.getElementById('game-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeGameDetail();
+});
+
+// Render predictions on load
+renderPredictions();
+</script>
+</body>
